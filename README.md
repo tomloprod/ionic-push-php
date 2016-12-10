@@ -1,10 +1,6 @@
 # ionic-push-php [![Release](https://img.shields.io/github/release/tomloprod/ionic-push-php.svg)](https://github.com/tomloprod/ionic-push-php) [![License](https://img.shields.io/github/license/tomloprod/ionic-push-php.svg)](http://www.opensource.org/licenses/mit-license.php) 
 
-<br>
-
 ionic-push-php is a library that allows you to consume the *Ionic Cloud API* for sending push notifications (*normal and scheduled*), get a paginated list of sending push notifications,  get information of registered devices, remove registered devices by token, ...
-
-<br>
 
 ---
 
