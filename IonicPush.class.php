@@ -40,7 +40,7 @@ class IonicPush {
         $this->pushData["scheduled"] = $dateTime;
     }
 
-    /** TODO: PROBAR ***********************
+    /**
      * Determines if the message should be delivered as a silent notification.
      * @param {Boolean} $enableSilentNotification
      */
