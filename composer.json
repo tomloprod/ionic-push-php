@@ -5,13 +5,16 @@
     "ionic",
     "push",
     "notifications",
-	"php"
+    "php"
   ],
+  "require": {
+     "php": ">=5.1",
+  },
   "homepage": "https://github.com/tomloprod/ionic-push-php",
   "license": "MIT",
   "authors": [
     {
-      "name": "Tomas Lopez",
+      "name": "Tomas Lopez"
     }
   ]
 }
