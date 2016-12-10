@@ -3,7 +3,6 @@
 /**
  * Ionic Push Library v 1.0.0
  * 
- * (for Ionic 2.0.0-beta.0)
  * 
  * @category  Library
  * @author    Tomás L.R (@tomloprod)
