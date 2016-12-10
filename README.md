@@ -81,13 +81,13 @@ You can also pass **custom data** to the notification:
 <br>
     
     
-And define if you want and **silent notification**:
+And define, if you need it, a **silent notification**:
 
     $ionicPush->setSilentNotification(true);
 
 <br>
 
-Or/and even an **scheduled notification**:
+Or/and even a **scheduled notification**:
 
     $ionicPush->setScheduled("2016-12-10 10:30:10");
 
