@@ -11,6 +11,12 @@ ionic-push-php is a library that allows you to consume the *Ionic Cloud API* for
 
 ---
 
+### Installation:
+
+    composer require tomloprod/ionic-push-php
+
+---
+
 ### How to use:
 
 <br>
