@@ -20,7 +20,7 @@ class IonicPush {
     private $listNotifications = 'push/notifications'; // GET
     private $deleteDevice = 'push/tokens/:token_id'; // DELETE
     //////////// Config parameters.
-    private $pushData;
+    private $pushData = [];
     //////////// cURL
     public $timeout = 0;
     public $connectTimeout = 0;
