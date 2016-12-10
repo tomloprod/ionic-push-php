@@ -60,11 +60,11 @@ class IonicPush {
      * @param {array} $payloadData
      */
     public function setPayload($payloadData) {
-        if (is_array($payloadData) != true) {
+        if (!is_array($payloadData)) {
             $payloadData = array($payloadData);
         }
         if (count($payloadData) > 0) {
-            $this->pushData['payload'] = $payloadData;
+            $this->pushData['notification']['payload'] = $payloadData;
         }
     }
 
@@ -73,7 +73,7 @@ class IonicPush {
      * @param {array} $notificationData
      */
     public function setConfig($notificationData) {
-        if (is_array($notificationData) != true) {
+        if (!is_array($notificationData)) {
             $notificationData = array($notificationData);
         }
         if (count($notificationData) > 0) {
