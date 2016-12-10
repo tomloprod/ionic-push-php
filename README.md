@@ -15,16 +15,18 @@ ionic-push-php is a library that allows you to consume the *Ionic Cloud API* for
 
 ---
 
-<br>
-
 ### How to use:
 
-
+<br>
 First, instance an object:
 
     $ionicPush = new IonicPush($ionicProfile, $ionicAPIToken);
  
+ <br>
+ 
  Then you can:
+ 
+ <br>
  
  **1) Get list of notifications:**
  
@@ -37,16 +39,19 @@ First, instance an object:
         "fields" => "message_total"
     ]);
 
-***NOTE:** You will need to parse the returned array.*
+<br>
 
  **2) Get device information:**
  
      $deviceInformation = $ionicPush->getDeviceInfo($desiredDeviceToken);
  
+ <br>
  
 **3) Remove devices:**
 
     $ionicPush->deleteDevice($desiredDeviceToken);
+ 
+ <br>
  
  **4) Send notifications:**
  
@@ -62,6 +67,8 @@ First, instance an object:
         ]
     ]);
 
+<br>
+
 You can also pass **custom data** to the notification:
 
     $ionicPush->setPayload([ 
@@ -69,18 +76,32 @@ You can also pass **custom data** to the notification:
         "anotherCustomField" => "More custom content"
     ]);
     
+<br>
+    
+    
 And define if you want and **silent notification**:
 
     $ionicPush->setSilentNotification(true);
-    
+
+<br>
+
 Or/and even an **scheduled notification**:
 
     $ionicPush->setScheduled("2016-12-10 10:30:10");
 
+<br>
+
 When you have configured the notification according to your needs you can send it to some devices:
 
     $ionicPush->sendPush([$desiredToken1, $desiredToken2, $desiredToken3]);
-    
+  
+<br>
+
 Or send this to all registered devices:
 
     $ionicPush->sendPushAll();
+    
+
+<br>
+    
+##### *NOTE: You will need to parse the returned array of the methods that return information.*
