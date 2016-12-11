@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Ionic Push Library v 1.0.0
+ * Ionic Push Library v 1.0.1
  * 
  * 
  * @category  Library
