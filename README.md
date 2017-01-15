@@ -17,6 +17,14 @@ ionic-push-php is a library that allows you to consume the *Ionic Cloud API* for
 
 ---
 
+### $ionicProfile and $ionicAPIToken:
+
+In the next link you can see how to get this two configuration values: https://github.com/tomloprod/ionic-push-php/issues/1
+
+---
+
+
+
 ### How to use:
 
 <br>
