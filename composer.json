@@ -16,5 +16,10 @@
     {
       "name": "Tomas Lopez"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "Tomloprod\\IonicPush\\": "src/"
+    }
+  }
 }
