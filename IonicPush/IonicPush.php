@@ -1,5 +1,7 @@
 <?php
 
+namespace IonicPush;
+
 /**
  * Ionic Push Library v 1.0.1
  * 
