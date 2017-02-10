@@ -30,6 +30,9 @@ In the next link you can see how to get this two configuration values: https://g
 <br>
 First, instance an object:
 ```php
+use Tomloprod\IonicPush\IonicPush;
+
+
 $ionicPush = new IonicPush($ionicProfile, $ionicAPIToken);
  ```
  <br>
