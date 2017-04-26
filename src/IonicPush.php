@@ -17,14 +17,14 @@ class IonicPush {
 
     // API URLS
     private static $ionicBaseURL = 'https://api.ionic.io';
-    private static $endpoints = array(
-        "sendNotification" => '/push/notifications', // POST
-        "getNotification" => '/push/notifications,:notification_id', // GET
-        "getDeviceInfo" => '/push/tokens/:token_id', // GET
-        "listTokens" => '/push/tokens', // GET
-        "listNotifications" => '/push/notifications', // GET
-        "deleteDevice" => '/push/tokens/:token_id', // DELETE
-    );
+    private static $endPoints = [
+        'sendNotification' => '/push/notifications', // POST
+        'getNotification' => '/push/notifications,:notification_id', // GET
+        'getDeviceInfo' => '/push/tokens/:token_id', // GET
+        'listTokens' => '/push/tokens', // GET
+        'listNotifications' => '/push/notifications', // GET
+        'deleteDevice' => '/push/tokens/:token_id', // DELETE
+    ];
 
     // Required for authentication
     private $ionicProfile;
@@ -36,8 +36,7 @@ class IonicPush {
     // cURL
     public $timeout = 0;
     public $connectTimeout = 0;
-    public $sslVerifypeer = 0;
-
+    public $sslVerifyPeer = 0;
 
     /**
      * IonicPush constructor.
@@ -50,7 +49,6 @@ class IonicPush {
         $this->ionicAPIToken = $ionicAPIToken;
     }
 
-
     /**
      * Set notification config.
      *
@@ -58,12 +56,12 @@ class IonicPush {
      */
     public function setConfig($notificationData) {
         if (!is_array($notificationData)) {
-            $notificationData = array($notificationData);
+            $notificationData = [$notificationData];
         }
         if (count($notificationData) > 0) {
             $newData = [];
-            $newData["profile"] = $this->ionicProfile;
-            $newData["notification"] = $notificationData;
+            $newData['profile'] = $this->ionicProfile;
+            $newData['notification'] = $notificationData;
             $this->pushData = array_merge($this->pushData, $newData);
         }
     }
@@ -75,7 +73,7 @@ class IonicPush {
      */
     public function setPayload($payloadData) {
         if (!is_array($payloadData)) {
-            $payloadData = array($payloadData);
+            $payloadData = [$payloadData];
         }
         if (count($payloadData) > 0) {
             $this->pushData['notification']['payload'] = $payloadData;
@@ -87,10 +85,9 @@ class IonicPush {
      *
      * @param string $date - Time to start delivery of the notification Y-m-d H:i:s format
      */
-    public function setScheduled($date) {
-        // Convert date to RFC3339
-        $dateTime = date("c", strtotime($date));
-        $this->pushData["scheduled"] = $dateTime;
+    public function setScheduled($dateTime) {
+        // Convert dateTime to RFC3339
+        $this->pushData['scheduled'] = date("c", strtotime($dateTime));
     }
 
     /**
@@ -100,14 +97,13 @@ class IonicPush {
      */
     public function setSilentNotification($enableSilentNotification = false) {
         if ($enableSilentNotification) {
-            $this->pushData["notification"]["android"]["content_available"] = 1;
-            $this->pushData["notification"]["ios"]["content_available"] = 1;
+            $this->pushData['notification']['android']['content_available'] = 1;
+            $this->pushData['notification']['ios']['content_available'] = 1;
         } else {
-            unset($this->pushData["notification"]["android"]["content_available"]);
-            unset($this->pushData["notification"]["ios"]["content_available"]);
+            unset($this->pushData['notification']['android']['content_available']);
+            unset($this->pushData['notification']['ios']['content_available']);
         }
     }
-
 
     /**
      * Paginated listing of Push Notifications.
@@ -117,7 +113,7 @@ class IonicPush {
      */
     public function listNotifications($parameters) {
         $getParameters = http_build_query($parameters);
-        return $this->sendRequest(self::METHOD_GET, self::$endpoints['listNotifications'] . "?" . $getParameters, $this->pushData);
+        return $this->sendRequest(self::METHOD_GET, self::$endPoints['listNotifications'] . '?' . $getParameters, $this->pushData);
     }
 
     /**
@@ -127,9 +123,8 @@ class IonicPush {
      * @return array
      */
     public function getNotification($notificationId) {
-        return $this->prepareNotificationRequest(self::METHOD_GET, $notificationId, self::$endpoints['getNotification']);
+        return $this->prepareNotificationRequest(self::METHOD_GET, $notificationId, self::$endPoints['getNotification']);
     }
-
 
     /**
      * Paginated listing of Tokens.
@@ -139,7 +134,7 @@ class IonicPush {
      */
     public function listTokens($parameters) {
         $getParameters = http_build_query($parameters);
-        return $this->sendRequest(self::METHOD_GET, self::$endpoints['listTokens'] . "?" . $getParameters, $this->pushData);
+        return $this->sendRequest(self::METHOD_GET, self::$endPoints['listTokens'] . '?' . $getParameters, $this->pushData);
     }
 
     /**
@@ -149,7 +144,7 @@ class IonicPush {
      * @return array
      */
     public function getDeviceInfo($deviceToken) {
-        return $this->prepareDeviceRequest(self::METHOD_GET, $deviceToken, self::$endpoints['getDeviceInfo']);
+        return $this->prepareDeviceRequest(self::METHOD_GET, $deviceToken, self::$endPoints['getDeviceInfo']);
     }
 
     /**
@@ -159,9 +154,8 @@ class IonicPush {
      * @return array
      */
     public function deleteDevice($deviceToken) {
-        return $this->prepareDeviceRequest(self::METHOD_DELETE, $deviceToken, self::$endpoints['deleteDevice']);
+        return $this->prepareDeviceRequest(self::METHOD_DELETE, $deviceToken, self::$endPoints['deleteDevice']);
     }
-
 
     /**
      * Send push for the indicated device tokens.
@@ -170,7 +164,8 @@ class IonicPush {
      * @return array
      */
     public function sendPush($deviceTokens) {
-        $this->pushData["tokens"] = $deviceTokens;
+        $this->pushData['tokens'] = $deviceTokens;
+		$this->pushData['send_to_all'] = false;
         return $this->push();
     }
 
@@ -180,7 +175,7 @@ class IonicPush {
      * @return array
      */
     public function sendPushAll() {
-        $this->pushData["send_to_all"] = true;
+        $this->pushData['send_to_all'] = true;
         return $this->push();
     }
 
@@ -191,7 +186,7 @@ class IonicPush {
      * @return array
      */
     private function push() {
-        $response = $this->sendRequest(self::METHOD_POST, self::$endpoints['sendNotification'], $this->pushData);
+        $response = $this->sendRequest(self::METHOD_POST, self::$endPoints['sendNotification'], $this->pushData);
         return $response;
     }
 
@@ -205,7 +200,7 @@ class IonicPush {
      * @return array
      */
     private function prepareDeviceRequest($method, $deviceToken, $endPoint) {
-        return $this->sendRequest($method, str_replace(":token_id", md5($deviceToken), $endPoint), $this->pushData);
+        return $this->sendRequest($method, str_replace(':token_id', md5($deviceToken), $endPoint), $this->pushData);
     }
 
     /**
@@ -218,7 +213,7 @@ class IonicPush {
      * @return array
      */
     private function prepareNotificationRequest($method, $notificationId, $endPoint) {
-        return $this->sendRequest($method, str_replace(":notification_id", md5($notificationId), $endPoint), $this->pushData);
+        return $this->sendRequest($method, str_replace(':notification_id', md5($notificationId), $endPoint), $this->pushData);
     }
 
     /**
@@ -237,18 +232,18 @@ class IonicPush {
 
         $ci = curl_init();
 
-        $authorization = sprintf("Bearer %s", $this->ionicAPIToken);
+        $authorization = sprintf('Bearer %s', $this->ionicAPIToken);
 
-        $headers = array(
+        $headers = [
             'Authorization:' . $authorization,
             'Content-Type: application/json',
             'Content-Length: ' . strlen($jsonData)
-        );
+        ];
 
         curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
         curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($ci, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, $this->sslVerifypeer);
+        curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, $this->sslVerifyPeer);
         curl_setopt($ci, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ci, CURLOPT_HEADER, FALSE);
 
