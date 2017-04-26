@@ -63,15 +63,15 @@ $notificationList = $ionicPush->listNotifications([
 
  **3) Get list of tokens:**
 ```php
-$notificationList = $ionicPush->listTokens([
+$tokenList = $ionicPush->listTokens([
     // Determines whether to include invalidated tokens
-    show_invalid => 1,
+    "show_invalid" => 1,
     // Only display tokens associated with the User ID.
     user_id => $desiredUserId,
     // Number of tokens per page
     page_size => 4,
     // Selected page
-    page => 1
+    "page" => 1
 ]);
 ```
 
