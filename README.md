@@ -46,11 +46,11 @@ $ionicPush = new IonicPush($ionicProfile, $ionicAPIToken);
 ```php
 $notificationList = $ionicPush->listNotifications([
     // Number of notifications per page
-    "page_size" => 1,
+    'page_size' => 1,
     // Selected page
-    "page" => 1,
+    'page' => 1,
     // You can also pass other fields like "message_total"
-    "fields" => "message_total"
+    'fields' => 'message_total'
 ]);
 ```
 
@@ -65,13 +65,13 @@ $notificationList = $ionicPush->listNotifications([
 ```php
 $tokenList = $ionicPush->listTokens([
     // Determines whether to include invalidated tokens
-    "show_invalid" => 1,
+    'show_invalid' => 1,
     // Only display tokens associated with the User ID.
-    "user_id" => $desiredUserId,
+    'user_id' => $desiredUserId,
     // Number of tokens per page
-    "page_size" => 4,
+    'page_size' => 4,
     // Selected page
-    "page" => 1
+    'page' => 1
 ]);
 ```
 
@@ -93,14 +93,14 @@ $ionicPush->deleteDevice($desiredDeviceToken);
  **6) Send notifications:**
  ```php
 $ionicPush->setConfig([
-    "title" => "Your notification title",
-    "tickerText" => "Your ticker text",
-    "message" => "Your notification message. Bla, bla, bla, bla.",
-    "android" => [
-        "tag" => "YourTagIfYouNeedIt"
+    'title' => 'Your notification title',
+    'tickerText' => 'Your ticker text',
+    'message' => 'Your notification message. Bla, bla, bla, bla.',
+    'android' => [
+        'tag' => 'YourTagIfYouNeedIt'
     ],
-    "ios" => [
-        "priority" => 10
+    'ios' => [
+        'priority' => 10
     ]
 ]);
 ```
@@ -109,8 +109,8 @@ $ionicPush->setConfig([
 You can also pass **custom data** to the notification:
 ```php
 $ionicPush->setPayload([ 
-    "myCustomField" => "This is the content of my customField",
-    "anotherCustomField" => "More custom content"
+    'myCustomField' => 'This is the content of my customField',
+    'anotherCustomField' => 'More custom content'
 ]);
 ```
 <br>
@@ -124,7 +124,7 @@ $ionicPush->setSilentNotification(true);
 
 Or/and even a **scheduled notification**:
 ```php
-$ionicPush->setScheduled("2016-12-10 10:30:10");
+$ionicPush->setScheduled('2016-12-10 10:30:10');
 ```
 <br>
 
