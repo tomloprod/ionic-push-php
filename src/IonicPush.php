@@ -3,7 +3,7 @@
 namespace Tomloprod\IonicPush;
 
 /**
- * Ionic Push Library v 1.0.2
+ * Ionic Push Library v 1.0.3
  * 
  * 
  * @category  Library
@@ -11,18 +11,19 @@ namespace Tomloprod\IonicPush;
  */
 class IonicPush {
 
-    //////////// Required for authentication
+    // Required for authentication
     private $ionicProfile;
     private $ionicAPIToken;
-    //////////// API URLS
+    // API URLS
     private $ionicBaseURL = 'https://api.ionic.io/';
     private $sendNotification = 'push/notifications'; // POST
     private $getDeviceInfo = 'push/tokens/:token_id'; // GET
+    private $listTokens = 'push/tokens'; // GET
     private $listNotifications = 'push/notifications'; // GET
     private $deleteDevice = 'push/tokens/:token_id'; // DELETE
-    //////////// Config parameters.
+    // Config parameters
     private $pushData = [];
-    //////////// cURL
+    // cURL
     public $timeout = 0;
     public $connectTimeout = 0;
     public $sslVerifypeer = 0;
@@ -33,20 +34,20 @@ class IonicPush {
     }
 
     /**
-     * 
-     * @param {String} $date - Time to start delivery of the notification Y-m-d H:i:s format
+     * Set scheduled time for the notification.
+     * @param string $date - Time to start delivery of the notification Y-m-d H:i:s format
      */
     public function setScheduled($date) {
-        //////////// Convert date to RFC3339 
+        // Convert date to RFC3339
         $dateTime = date("c", strtotime($date));
         $this->pushData["scheduled"] = $dateTime;
     }
 
     /**
      * Determines if the message should be delivered as a silent notification.
-     * @param {Boolean} $enableSilentNotification
+     * @param bool $enableSilentNotification
      */
-    public function setSilentNotification($enableSilentNotification) {
+    public function setSilentNotification($enableSilentNotification = false) {
         if ($enableSilentNotification) {
             $this->pushData["notification"]["android"]["content_available"] = 1;
             $this->pushData["notification"]["ios"]["content_available"] = 1;
@@ -58,7 +59,7 @@ class IonicPush {
 
     /**
      * Custom data.
-     * @param {array} $payloadData
+     * @param array $payloadData
      */
     public function setPayload($payloadData) {
         if (!is_array($payloadData)) {
@@ -71,7 +72,7 @@ class IonicPush {
 
     /**
      * Notification config.
-     * @param {array} $notificationData
+     * @param array $notificationData
      */
     public function setConfig($notificationData) {
         if (!is_array($notificationData)) {
@@ -86,9 +87,19 @@ class IonicPush {
     }
 
     /**
-     * Paginated listing of Push Notifications
-     * @param {array} $parameters
-     * @return {array}
+     * Paginated listing of Tokens.
+     * @param array $parameters
+     * @return array
+     */
+    public function listTokens($parameters) {
+        $getParameters = http_build_query($parameters);
+        return $this->sendRequest("GET", $this->ionicBaseURL . $this->listTokens . "?" . $getParameters, $this->pushData);
+    }
+
+    /**
+     * Paginated listing of Push Notifications.
+     * @param array $parameters
+     * @return array
      */
     public function listNotifications($parameters) {
         $getParameters = http_build_query($parameters);
@@ -96,9 +107,9 @@ class IonicPush {
     }
 
     /**
-     * Get information about a device of a specific device token
-     * @param {String} $deviceToken - Device token
-     * @return {array}
+     * Get information about a device of a specific device token.
+     * @param string $deviceToken - Device token
+     * @return array
      */
     public function getDeviceInfo($deviceToken) {
         return $this->prepareRequest("GET", $deviceToken, $this->ionicBaseURL . $this->getDeviceInfo);
@@ -106,17 +117,17 @@ class IonicPush {
 
     /**
      * Delete a device related to the device token. 
-     * @param {String} $deviceToken - Device token
-     * @return {array}
+     * @param string $deviceToken - Device token
+     * @return array
      */
     public function deleteDevice($deviceToken) {
         return $this->prepareRequest("DELETE", $deviceToken, $this->ionicBaseURL . $this->deleteDevice);
     }
 
     /**
-     * Send push for the indicated device tokens
-     * @param {array} $deviceTokens
-     * @return {array}
+     * Send push for the indicated device tokens.
+     * @param array $deviceTokens
+     * @return array
      */
     public function sendPush($deviceTokens) {
         $this->pushData["tokens"] = $deviceTokens;
@@ -125,39 +136,42 @@ class IonicPush {
 
     /** 
      * Send push for all registered devices.
-     * @return {array}
+     * @return array
      */
     public function sendPushAll() {
         $this->pushData["send_to_all"] = true;
         return $this->push();
     }
 
-    /** PRIVATE METHOD.
-     * Used by "sendPush" and "sendPushAll"
-     * @return {array}
+    /**
+     * Used by "sendPush" and "sendPushAll".
+     * @private
+     * @return array
      */
     private function push() {
         $response = $this->sendRequest("POST", $this->ionicBaseURL . $this->sendNotification, $this->pushData);
         return $response;
     }
 
-    /** PRIVATE METHOD.
-     * Used by "getDeviceInfo" and "deleteDevice"
-     * @param {String} $method
-     * @param {String} $deviceToken
-     * @param {String} $endPoint
-     * @return {array}
+    /**
+     * Used by "getDeviceInfo" and "deleteDevice".
+     * @private
+     * @param string $method
+     * @param string $deviceToken
+     * @param string $endPoint
+     * @return array
      */
     private function prepareRequest($method, $deviceToken, $endPoint) {
         return $this->sendRequest($method, str_replace(":token_id", md5($deviceToken), $endPoint), $this->pushData);
     }
 
-    /** PRIVATE METHOD.
-     * Send requests to the Ionic Push API
-     * @param {String} $method
-     * @param {String} $endPoint
-     * @param {String} $data
-     * @return {array}
+    /**
+     * Send requests to the Ionic Push API.
+     * @private
+     * @param string $method
+     * @param string $endPoint
+     * @param string $data
+     * @return array
      */
     private function sendRequest($method, $endPoint, $data) {
         $jsonData = json_encode($data);

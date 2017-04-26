@@ -2,7 +2,7 @@
   "name": "ionic-push-php",
   "description": "ionic-push-php is a library that allows you to consume the Ionic Cloud API for sending push notifications (normal and scheduled), get a paginated list of sending push notifications, get information of registered devices, remove registered devices by token, ...",
   "author": "Tomas Lopez",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "repository": {
     "type": "git",
