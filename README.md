@@ -67,9 +67,9 @@ $tokenList = $ionicPush->listTokens([
     // Determines whether to include invalidated tokens
     "show_invalid" => 1,
     // Only display tokens associated with the User ID.
-    user_id => $desiredUserId,
+    "user_id" => $desiredUserId,
     // Number of tokens per page
-    page_size => 4,
+    "page_size" => 4,
     // Selected page
     "page" => 1
 ]);
