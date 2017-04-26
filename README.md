@@ -62,7 +62,7 @@ $notificationList = $ionicPush->listTokens([
     show_invalid => 1,
     // Only display tokens associated with the User ID.
     user_id => $desiredUserId,
-    // Number of notifications per page
+    // Number of tokens per page
     page_size => 4,
     // Selected page
     page => 1
