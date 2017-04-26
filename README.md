@@ -53,9 +53,15 @@ $notificationList = $ionicPush->listNotifications([
     "fields" => "message_total"
 ]);
 ```
+
+**2) Get specific notification:**
+ ```php
+ $notification = $ionicPush->getNotification($desiredNotificationId);
+ ```
+ 
 <br>
 
- **2) Get list of tokens:**
+ **3) Get list of tokens:**
 ```php
 $tokenList = $ionicPush->listTokens([
     // Determines whether to include invalidated tokens
@@ -69,20 +75,22 @@ $tokenList = $ionicPush->listTokens([
 ]);
 ```
 
- **3) Get device information:**
+ <br>
+
+ **4) Get device information:**
  ```php
  $deviceInformation = $ionicPush->getDeviceInfo($desiredDeviceToken);
  ```
  
  <br>
  
-**4) Remove devices:**
+**5) Remove devices:**
 ```php
 $ionicPush->deleteDevice($desiredDeviceToken);
 ```
  <br>
  
- **5) Send notifications:**
+ **6) Send notifications:**
  ```php
 $ionicPush->setConfig([
     "title" => "Your notification title",
