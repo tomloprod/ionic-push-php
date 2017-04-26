@@ -18,6 +18,7 @@ class IonicPush {
     private $ionicBaseURL = 'https://api.ionic.io/';
     private $sendNotification = 'push/notifications'; // POST
     private $getDeviceInfo = 'push/tokens/:token_id'; // GET
+    private $listTokens = 'push/tokens'; // GET
     private $listNotifications = 'push/notifications'; // GET
     private $deleteDevice = 'push/tokens/:token_id'; // DELETE
     //////////// Config parameters.
@@ -83,6 +84,16 @@ class IonicPush {
             $newData["notification"] = $notificationData;
             $this->pushData = array_merge($this->pushData, $newData);
         }
+    }
+
+    /**
+     * Paginated listing of Tokens
+     * @param {array} $parameters
+     * @return {array}
+     */
+    public function listTokens($parameters) {
+        $getParameters = http_build_query($parameters);
+        return $this->sendRequest("GET", $this->ionicBaseURL . $this->listTokens . "?" . $getParameters, $this->pushData);
     }
 
     /**
