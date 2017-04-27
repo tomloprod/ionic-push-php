@@ -15,7 +15,11 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Tomas Lopez"
+      "name": "Tomas Lopez",
+      "role": "Developer"
+    },{
+      "name": "Ramon Carreras",
+      "role": "Developer"
     }
   ],
   "autoload": {
