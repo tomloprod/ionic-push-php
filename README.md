@@ -2,29 +2,24 @@
 
 ionic-push-php is a library that allows you to consume the *Ionic Cloud API* for **sending push notifications** (*normal and scheduled*), get a paginated **list of sending push notifications**,  get **information of registered devices**, **remove registered devices by token**, ...
 
----
 
-### Requirements:
+## Requirements:
 
 - PHP 5.1+
 - cURL
 
----
 
-### Installation:
+## Installation:
 
     composer require tomloprod/ionic-push-php
 
----
 
-### $ionicProfile and $ionicAPIToken:
+## $ionicProfile and $ionicAPIToken:
 
 In the next link you can see how to get this two configuration values: https://github.com/tomloprod/ionic-push-php/issues/1
 
----
 
-
-### How to use:
+## How to use:
 
 First, instance an object:
 
@@ -34,11 +29,10 @@ use Tomloprod\IonicPush\IonicPush;
 $ionicPush = new IonicPush($ionicProfile, $ionicAPIToken);
 ```
 
-<br>
  
 Then you can:
 
-#### Device Tokens
+### Device Tokens
 
  **1) List tokens:**
 ```php
@@ -68,7 +62,7 @@ $deviceInformation = $ionicPush->deviceTokens->retrieve($desiredDeviceToken);
 $deviceInformation = $ionicPush->deviceTokens->delete($desiredDeviceToken);
 ```
 
-#### Notifications
+### Notifications
  
 **1) List notifications:**
 ```php
