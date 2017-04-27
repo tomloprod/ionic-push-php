@@ -81,6 +81,7 @@ class Request {
                 break;
             case self::METHOD_GET:
             case self::METHOD_DELETE:
+            case self::METHOD_PATCH:
                 curl_setopt($ci, CURLOPT_CUSTOMREQUEST, $method);
                 if (!empty($jsonData)) {
                     curl_setopt($ci, CURLOPT_POSTFIELDS, $jsonData);
