@@ -7,7 +7,7 @@ use Tomloprod\IonicApi\Api\Messages;
 use Tomloprod\IonicApi\Api\Notifications;
 
 /**
- * Ionic API Push Library v 1.1.3
+ * Ionic API Push Library v 1.1.4
  *
  * @package Tomloprod\IonicApi
  * @category  Library
