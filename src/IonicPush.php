@@ -11,7 +11,8 @@ use Tomloprod\IonicPush\Api\NotificationsApi;
  *
  * @package Tomloprod\IonicPush
  * @category  Library
- * @author    Tomás L.R (@tomloprod)
+ * @author  Tomás L.R (@tomloprod)
+ * @author  Ramon Carreras (@ramoncarreras)
  */
 class IonicPush {
 
