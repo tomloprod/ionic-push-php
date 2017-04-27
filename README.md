@@ -21,9 +21,9 @@ In the next link you can see how to get this two configuration values: https://g
 
 ## TODO:
 
-1. Methods retrieve() and delete() of **MessagesApi**.
-1. Methods replace(), delete() and listMessages() of **NotificationsApi**.
-1. Mothods create(), update(), listAssociatedUsers(), associateUser() and dissociateUser() of **DeviceTokensApi**.
+1. Methods retrieve() and delete() of **Messages**.
+1. Methods replace(), delete() and listMessages() of **Notifications**.
+1. Mothods create(), update(), listAssociatedUsers(), associateUser() and dissociateUser() of **DeviceTokens**.
 
 ## How to use:
 
