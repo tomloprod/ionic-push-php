@@ -58,8 +58,16 @@ $tokens = $ionicPushApi->deviceTokens->paginatedList([
 ```php
 $deviceInformation = $ionicPushApi->deviceTokens->retrieve($desiredDeviceToken);
 ```
+
+**3) Update an specific token:**
+```php
+$updatedDeviceInformation = $ionicPushApi->deviceTokens->update($desiredDeviceToken, [
+    // Determines whether the device token is valid
+    'valid' => 1
+]);
+```
  
-**3) Delete a device related to the device token:**
+**4) Delete a device related to the device token:**
 ```php
 $deleteResult = $ionicPushApi->deviceTokens->delete($desiredDeviceToken);
 ```

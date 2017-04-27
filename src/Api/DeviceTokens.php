@@ -48,7 +48,17 @@ class DeviceTokens extends Request {
         return $this->prepareRequest(self::METHOD_GET, $deviceToken, self::$endPoints['retrieve']);
     }
 
-    // TODO: update
+    /**
+     * Updates a token.
+     *
+     * @param string $deviceToken - Device token
+     * @param array $parameters
+     * @return array
+     */
+    public function update($deviceToken, $parameters) {
+        $getParameters = http_build_query($parameters);
+        return $this->prepareRequest(self::METHOD_GET, $deviceToken, self::$endPoints['update'] . '?' . $getParameters);
+    }
 
     /**
      * Delete a device related to the device token.

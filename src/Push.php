@@ -17,19 +17,19 @@ use Tomloprod\IonicApi\Api\Messages;
 class Push {
 
     /**
-     * NotificationsApi instance.
+     * Notifications instance.
      * @var Notifications
      */
     public $notifications;
 
     /**
-     * DeviceTokensApi instance.
+     * DeviceTokens instance.
      * @var DeviceTokens
      */
     public $deviceTokens;
 
     /**
-     * MessagesApi instance.
+     * Messages instance.
      * @var Messages
      */
     public $messages;
