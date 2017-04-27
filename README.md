@@ -2,6 +2,7 @@
 
 ionic-push-php is a library that allows you to consume the *Ionic Cloud API* for **sending push notifications** (*normal and scheduled*), get a paginated **list of sending push notifications**,  get **information of registered devices**, **remove registered devices by token**, ...
 
+Ionic official documentation: [Ionic HTTP API - Push](https://docs.ionic.io/api/endpoints/push.html).
 
 ## Requirements:
 
@@ -21,7 +22,7 @@ In the next link you can see how to get this two configuration values: https://g
 
 ## TODO:
 
-1. Methods replace(), delete() and listMessages() of **Notifications**.
+1. Methods replace() and listMessages() of **Notifications**.
 1. Mothods create(), update(), listAssociatedUsers(), associateUser() and dissociateUser() of **DeviceTokens**.
 
 ## How to use:
@@ -53,14 +54,10 @@ $tokens = $ionicPushApi->deviceTokens->paginatedList([
 ]);
 ```
 
-<br>
-
 **2) Retrieve device information related to the device token:**
 ```php
 $deviceInformation = $ionicPushApi->deviceTokens->retrieve($desiredDeviceToken);
 ```
- 
-<br>
  
 **3) Delete a device related to the device token:**
 ```php
@@ -74,7 +71,6 @@ $deleteResult = $ionicPushApi->deviceTokens->delete($desiredDeviceToken);
 $message = $ionicPushApi->messages->retrieve($desiredMessageId);
 ```
 
-<br>
 
 **2) Delete a message:**
 ```php
@@ -100,9 +96,12 @@ $notifications = $ionicPushApi->notifications->paginatedList([
 $notification = $ionicPushApi->notifications->retrieve($desiredNotificationId);
 ```
  
-<br>
+**3) Delete a notification:**
+```php
+$deleteResult = $ionicPushApi->notifications->delete($desiredNotificationId);
+```
  
-**3) Send notifications:**
+**4) Send notifications:**
 ```php
 // Configuration of the notification
 $notificationConfig = [

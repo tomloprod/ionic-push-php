@@ -109,7 +109,18 @@ class Notifications extends Request {
 
     // TODO: replace
 
-    // TODO: delete
+    /**
+     * Deletes a notification.
+     *
+     * @param $notificationId
+     * @return array
+     */
+    public function delete($notificationId) {
+        return $this->sendRequest(
+            self::METHOD_DELETE,
+            str_replace(':notification_id', $notificationId, self::$endPoints['delete'])
+        );
+    }
 
     // TODO: list messages
 
