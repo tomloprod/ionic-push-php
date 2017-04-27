@@ -1,11 +1,11 @@
 <?php
 
-namespace Tomloprod\IonicPush;
+namespace Tomloprod\IonicPush\Api;
 
 /**
  * Class IonicApiRequest
  *
- * @package Tomloprod\IonicPush
+ * @package Tomloprod\IonicPush\Api
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */

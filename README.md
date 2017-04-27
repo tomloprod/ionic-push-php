@@ -26,7 +26,6 @@ In the next link you can see how to get this two configuration values: https://g
 
 ### How to use:
 
-
 First, instance an object:
 
 ```php
@@ -41,7 +40,7 @@ Then you can:
 
 #### Device Tokens
 
- **1) Get list of tokens:**
+ **1) List tokens:**
 ```php
 $tokenList = $ionicPush->deviceTokens->paginatedList([
     // Determines whether to include invalidated tokens
@@ -57,7 +56,7 @@ $tokenList = $ionicPush->deviceTokens->paginatedList([
 
 <br>
 
-**2) Get device information related to the device token:**
+**2) Retrieve device information related to the device token:**
 ```php
 $deviceInformation = $ionicPush->deviceTokens->retrieve($desiredDeviceToken);
 ```
@@ -71,7 +70,7 @@ $deviceInformation = $ionicPush->deviceTokens->delete($desiredDeviceToken);
 
 #### Notifications
  
-**1) Get list of notifications:**
+**1) List notifications:**
 ```php
 $notificationList = $ionicPush->notifications->paginatedList([
     // Number of notifications per page
@@ -83,7 +82,7 @@ $notificationList = $ionicPush->notifications->paginatedList([
 ]);
 ```
 
-**2) Get specific notification:**
+**2) Retrieve specific notification:**
 ```php
 $notification = $ionicPush->notifications->retrieve($desiredNotificationId);
 ```
@@ -92,7 +91,8 @@ $notification = $ionicPush->notifications->retrieve($desiredNotificationId);
  
 **3) Send notifications:**
 ```php
-$ionicPush->notifications->setConfig([
+// Configuration of the notification
+$notificationConfig = [
     'title' => 'Your notification title',
     'tickerText' => 'Your ticker text',
     'message' => 'Your notification message. Bla, bla, bla, bla.',
@@ -102,40 +102,27 @@ $ionicPush->notifications->setConfig([
     'ios' => [
         'priority' => 10
     ]
-]);
-```
-<br>
+];
 
-You can also pass **custom data** to the notification:
-```php
-$ionicPush->notifications->setPayload([ 
+// [OPTIONAL] You can also pass custom data to the notification. Default => []
+$payload = [ 
     'myCustomField' => 'This is the content of my customField',
     'anotherCustomField' => 'More custom content'
-]);
-```
-<br>
-    
-And define, if you need it, a **silent notification**:
-```php
-$ionicPush->notifications->setSilentNotification(true);
-```
-<br>
+];
 
-Or/and even a **scheduled notification**:
-```php
-$ionicPush->notifications->setScheduled('2016-12-10 10:30:10');
-```
-<br>
+// [OPTIONAL] And define, if you need it, a silent notification. Default => false
+$silent = true;
 
-When you have configured the notification according to your needs you can send it to some devices:
-```php
-$ionicPush->notifications->sendPush([$desiredToken1, $desiredToken2, $desiredToken3]);
-```
-<br>
+// [OPTIONAL] Or/and even a scheduled dateteime. Default => ''
+$scheduled = '2016-12-10 10:30:10';
 
-Or send this to all registered devices:
-```php
-$ionicPush->notifications->sendPushToAll();
+
+// Configure notification:
+$ionicPush->notifications->setConfig($notificationConfig, $payload, $silent, $scheduled);
+
+// Send notification...
+$ionicPush->notifications->sendPushToAll(); // ...to all registered devices
+$ionicPush->notifications->sendPush([$desiredToken1, $desiredToken2, $desiredToken3]); // ...to some devices
 ```
 
 <br>

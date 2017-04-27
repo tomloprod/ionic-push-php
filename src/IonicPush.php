@@ -2,6 +2,10 @@
 
 namespace Tomloprod\IonicPush;
 
+use Tomloprod\IonicPush\Api\DeviceTokensApi;
+use Tomloprod\IonicPush\Api\MessagesApi;
+use Tomloprod\IonicPush\Api\NotificationsApi;
+
 /**
  * Ionic Push Library v 1.1.0
  *

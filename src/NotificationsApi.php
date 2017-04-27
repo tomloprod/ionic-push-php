@@ -1,6 +1,6 @@
 <?php
 
-namespace Tomloprod\IonicPush;
+namespace Tomloprod\IonicPush\Api;
 
 /**
  * Class NotificationsApi
@@ -8,7 +8,7 @@ namespace Tomloprod\IonicPush;
  * Stores ionic push api methods related to notifications collection.
  * More info: https://docs.ionic.io/api/endpoints/push.html
  *
- * @package Tomloprod\IonicPush
+ * @package Tomloprod\IonicPush\Api
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
@@ -42,54 +42,39 @@ class NotificationsApi extends IonicApiRequest {
      * Set notification config.
      *
      * @param array $notificationData
+     * @param array $payloadData - Custom extra data
+     * @param bool $silentNotification - Determines if the message should be delivered as a silent notification.
+     * @param string $dateTime - Time to start delivery of the notification Y-m-d H:i:s format
      */
-    public function setConfig($notificationData) {
+    public function setConfig($notificationData, $payloadData = [], $silentNotification = false, $dateTime = '') {
         if (!is_array($notificationData)) {
             $notificationData = [$notificationData];
         }
         if (count($notificationData) > 0) {
             $this->requestData = array_merge($this->requestData, ['notification' => $notificationData]);
         }
-    }
 
-    /**
-     * Set custom data.
-     *
-     * @param array $payloadData
-     */
-    public function setPayload($payloadData) {
+        // payload
         if (!is_array($payloadData)) {
             $payloadData = [$payloadData];
         }
         if (count($payloadData) > 0) {
             $this->requestData['notification']['payload'] = $payloadData;
         }
-    }
 
-    /**
-     * Set scheduled time for the notification.
-     *
-     * @param string $dateTime - Time to start delivery of the notification Y-m-d H:i:s format
-     */
-    public function setScheduled($dateTime = "") {
-        if($this->isDatetime($dateTime)) {
-            // Convert dateTime to RFC3339
-            $this->requestData['scheduled'] = date("c", strtotime($dateTime));
-        }
-    }
-
-    /**
-     * Determines if the message should be delivered as a silent notification.
-     *
-     * @param bool $enableSilentNotification
-     */
-    public function setSilentNotification($enableSilentNotification = false) {
-        if ($enableSilentNotification) {
+        // silent
+        if ($silentNotification) {
             $this->requestData['notification']['android']['content_available'] = 1;
             $this->requestData['notification']['ios']['content_available'] = 1;
         } else {
             unset($this->requestData['notification']['android']['content_available']);
             unset($this->requestData['notification']['ios']['content_available']);
+        }
+
+        // scheduled
+        if($this->isDatetime($dateTime)) {
+            // Convert dateTime to RFC3339
+            $this->requestData['scheduled'] = date("c", strtotime($dateTime));
         }
     }
 
@@ -145,7 +130,7 @@ class NotificationsApi extends IonicApiRequest {
      *
      * @return array
      */
-    public function sendPushToToAll() {
+    public function sendPushToAll() {
         $this->requestData['send_to_all'] = true;
         return $this->create();
     }
@@ -179,8 +164,7 @@ class NotificationsApi extends IonicApiRequest {
      */
     private function isDatetime($datetime)
     {
-        if (preg_match('/^(\d{4})-(\d\d?)-(\d\d?) (\d\d?):(\d\d?):(\d\d?)$/', $datetime, $matches))
-        {
+        if (preg_match('/^(\d{4})-(\d\d?)-(\d\d?) (\d\d?):(\d\d?):(\d\d?)$/', $datetime, $matches)) {
             return checkdate($matches[2], $matches[3], $matches[1]) && $matches[4] / 24 < 1 && $matches[5] / 60 < 1 && $matches[6] / 60 < 1;
         }
 

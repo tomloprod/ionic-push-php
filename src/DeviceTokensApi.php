@@ -1,6 +1,6 @@
 <?php
 
-namespace Tomloprod\IonicPush;
+namespace Tomloprod\IonicPush\Api;
 
 /**
  * Class DeviceTokensApi
@@ -8,7 +8,7 @@ namespace Tomloprod\IonicPush;
  * Stores ionic push api methods related to device tokens collection.
  * More info: https://docs.ionic.io/api/endpoints/push.html
  *
- * @package Tomloprod\IonicPush
+ * @package Tomloprod\IonicPush\Api
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
