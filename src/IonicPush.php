@@ -3,7 +3,7 @@
 namespace Tomloprod\IonicPush;
 
 /**
- * Ionic Push Library v 1.0.5
+ * Ionic Push Library v 1.1.0
  *
  * @package Tomloprod\IonicPush
  * @category  Library
