@@ -9,7 +9,7 @@ use Tomloprod\IonicApi\Api\Notifications;
 /**
  * Ionic API Push Library v 1.1.1
  *
- * @package Tomloprod\IonicPush
+ * @package Tomloprod\Push
  * @category  Library
  * @author  Tomás L.R (@tomloprod)
  * @author  Ramon Carreras (@ramoncarreras)
@@ -35,7 +35,7 @@ class Push {
     // public $messages;
 
     /**
-     * IonicPush constructor.
+     * Push constructor.
      *
      * @param $ionicProfile
      * @param $ionicAPIToken
