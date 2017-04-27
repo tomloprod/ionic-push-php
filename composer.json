@@ -19,7 +19,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Tomloprod\\IonicPush\\": "src/"
+      "Tomloprod\\Push\\": "src/"
     }
   }
 }
