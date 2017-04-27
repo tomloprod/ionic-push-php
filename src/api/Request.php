@@ -1,15 +1,15 @@
 <?php
 
-namespace Tomloprod\IonicPush\Api;
+namespace Tomloprod\IonicApi\Api;
 
 /**
- * Class IonicApiRequest
+ * Class Request
  *
- * @package Tomloprod\IonicPush\Api
+ * @package Tomloprod\IonicApi\Api
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
-class IonicApiRequest {
+class Request {
 
     // Available HTTP methods
     const METHOD_GET = 'GET';

@@ -1,36 +1,36 @@
 <?php
 
-namespace Tomloprod\IonicPush;
+namespace Tomloprod\IonicApi;
 
-use Tomloprod\IonicPush\Api\DeviceTokensApi;
-use Tomloprod\IonicPush\Api\MessagesApi;
-use Tomloprod\IonicPush\Api\NotificationsApi;
+use Tomloprod\IonicApi\Api\DeviceTokens;
+use Tomloprod\IonicApi\Api\Messages;
+use Tomloprod\IonicApi\Api\Notifications;
 
 /**
- * Ionic Push Library v 1.1.0
+ * Ionic API Push Library v 1.1.0
  *
  * @package Tomloprod\IonicPush
  * @category  Library
  * @author  Tomás L.R (@tomloprod)
  * @author  Ramon Carreras (@ramoncarreras)
  */
-class IonicPush {
+class Push {
 
     /**
      * NotificationsApi instance.
-     * @var NotificationsApi
+     * @var Notifications
      */
     public $notifications;
 
     /**
      * DeviceTokensApi instance.
-     * @var DeviceTokensApi
+     * @var DeviceTokens
      */
     public $deviceTokens;
 
     /**
      * MessagesApi instance.
-     * @var MessagesApi
+     * @var Messages
      */
     // public $messages;
 
@@ -41,9 +41,9 @@ class IonicPush {
      * @param $ionicAPIToken
      */
     public function __construct($ionicProfile, $ionicAPIToken) {
-        $this->notifications = new NotificationsApi($ionicProfile, $ionicAPIToken);
-        $this->deviceTokens = new DeviceTokensApi($ionicProfile, $ionicAPIToken);
-        // $this->messages = new MessagesApi($ionicProfile, $ionicAPIToken);
+        $this->notifications = new Notifications($ionicProfile, $ionicAPIToken);
+        $this->deviceTokens = new DeviceTokens($ionicProfile, $ionicAPIToken);
+        // $this->messages = new Messages($ionicProfile, $ionicAPIToken);
     }
 
 }

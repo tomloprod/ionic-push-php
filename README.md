@@ -30,9 +30,9 @@ In the next link you can see how to get this two configuration values: https://g
 First, instance an object:
 
 ```php
-use Tomloprod\IonicPush\IonicPush;
+use Tomloprod\IonicApi\Push;
 
-$ionicPush = new IonicPush($ionicProfile, $ionicAPIToken);
+$ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 ```
 
  
@@ -42,7 +42,7 @@ Then you can:
 
  **1) List tokens:**
 ```php
-$tokenList = $ionicPush->deviceTokens->paginatedList([
+$tokenList = $ionicPushApi->deviceTokens->paginatedList([
     // Determines whether to include invalidated tokens
     'show_invalid' => 1,
     // Only display tokens associated with the User ID.
@@ -58,21 +58,21 @@ $tokenList = $ionicPush->deviceTokens->paginatedList([
 
 **2) Retrieve device information related to the device token:**
 ```php
-$deviceInformation = $ionicPush->deviceTokens->retrieve($desiredDeviceToken);
+$deviceInformation = $ionicPushApi->deviceTokens->retrieve($desiredDeviceToken);
 ```
  
 <br>
  
 **3) Delete a device related to the device token:**
 ```php
-$deviceInformation = $ionicPush->deviceTokens->delete($desiredDeviceToken);
+$deviceInformation = $ionicPushApi->deviceTokens->delete($desiredDeviceToken);
 ```
 
 ### Notifications
  
 **1) List notifications:**
 ```php
-$notificationList = $ionicPush->notifications->paginatedList([
+$notificationList = $ionicPushApi->notifications->paginatedList([
     // Number of notifications per page
     'page_size' => 1,
     // Selected page
@@ -84,7 +84,7 @@ $notificationList = $ionicPush->notifications->paginatedList([
 
 **2) Retrieve specific notification:**
 ```php
-$notification = $ionicPush->notifications->retrieve($desiredNotificationId);
+$notification = $ionicPushApi->notifications->retrieve($desiredNotificationId);
 ```
  
 <br>
@@ -118,11 +118,11 @@ $scheduled = '2016-12-10 10:30:10';
 
 
 // Configure notification:
-$ionicPush->notifications->setConfig($notificationConfig, $payload, $silent, $scheduled);
+$ionicPushApi->notifications->setConfig($notificationConfig, $payload, $silent, $scheduled);
 
 // Send notification...
-$ionicPush->notifications->sendPushToAll(); // ...to all registered devices
-$ionicPush->notifications->sendPush([$desiredToken1, $desiredToken2, $desiredToken3]); // ...to some devices
+$ionicPushApi->notifications->sendNotificationToAll(); // ...to all registered devices
+$ionicPushApi->notifications->sendNotification([$desiredToken1, $desiredToken2, $desiredToken3]); // ...to some devices
 ```
 
 <br>

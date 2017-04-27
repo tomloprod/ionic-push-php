@@ -1,18 +1,18 @@
 <?php
 
-namespace Tomloprod\IonicPush\Api;
+namespace Tomloprod\IonicApi\Api;
 
 /**
- * TODO: Class MessagesApi
+ * TODO: Class Messages
  *
  * Stores ionic push api methods related to messages collection.
  * More info: https://docs.ionic.io/api/endpoints/push.html
  *
- * @package Tomloprod\IonicPush\Api
+ * @package Tomloprod\IonicApi\Api
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
-class MessagesApi extends IonicApiRequest {
+class Messages extends Request {
 
     /*private static $endPoints = [
         'retrieve' => '/push/messages/:message_id', // GET

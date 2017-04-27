@@ -1,18 +1,18 @@
 <?php
 
-namespace Tomloprod\IonicPush\Api;
+namespace Tomloprod\IonicApi\Api;
 
 /**
- * Class DeviceTokensApi
+ * Class DeviceTokens
  *
  * Stores ionic push api methods related to device tokens collection.
  * More info: https://docs.ionic.io/api/endpoints/push.html
  *
- * @package Tomloprod\IonicPush\Api
+ * @package Tomloprod\IonicApi\Api
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
-class DeviceTokensApi extends IonicApiRequest {
+class DeviceTokens extends Request {
 
     private static $endPoints = [
         'list' => '/push/tokens', // GET

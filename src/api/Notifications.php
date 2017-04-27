@@ -1,18 +1,18 @@
 <?php
 
-namespace Tomloprod\IonicPush\Api;
+namespace Tomloprod\IonicApi\Api;
 
 /**
- * Class NotificationsApi
+ * Class Notifications
  *
  * Stores ionic push api methods related to notifications collection.
  * More info: https://docs.ionic.io/api/endpoints/push.html
  *
- * @package Tomloprod\IonicPush\Api
+ * @package Tomloprod\IonicApi\Api
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
-class NotificationsApi extends IonicApiRequest {
+class Notifications extends Request {
 
     public $requestData = [];
     private $ionicProfile;
@@ -114,23 +114,23 @@ class NotificationsApi extends IonicApiRequest {
     // TODO: list messages
 
     /**
-     * Send push for the indicated device tokens.
+     * Send push notification for the indicated device tokens.
      *
      * @param array $deviceTokens
      * @return array
      */
-    public function sendPush($deviceTokens) {
+    public function sendNotification($deviceTokens) {
         $this->requestData['tokens'] = $deviceTokens;
         $this->requestData['send_to_all'] = false;
         return $this->create();
     }
 
     /**
-     * Send push for all registered devices.
+     * Send push notificatoin for all registered devices.
      *
      * @return array
      */
-    public function sendPushToAll() {
+    public function sendNotificationToAll() {
         $this->requestData['send_to_all'] = true;
         return $this->create();
     }
