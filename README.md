@@ -19,6 +19,12 @@ ionic-push-php is a library that allows you to consume the *Ionic Cloud API* for
 In the next link you can see how to get this two configuration values: https://github.com/tomloprod/ionic-push-php/issues/1
 
 
+## TODO:
+
+1. Methods retrieve() and delete() of **MessagesApi**.
+1. Methods replace(), delete() and listMessages() of **NotificationsApi**.
+1. Mothods create(), update(), listAssociatedUsers(), associateUser() and dissociateUser() of **DeviceTokensApi**.
+
 ## How to use:
 
 First, instance an object:
