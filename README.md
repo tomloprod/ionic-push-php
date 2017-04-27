@@ -24,7 +24,6 @@ In the next link you can see how to get this two configuration values: https://g
 ---
 
 
-
 ### How to use:
 
 
@@ -33,37 +32,18 @@ First, instance an object:
 ```php
 use Tomloprod\IonicPush\IonicPush;
 
-
 $ionicPush = new IonicPush($ionicProfile, $ionicAPIToken);
- ```
-
- 
- Then you can:
- 
- <br>
- 
- **1) Get list of notifications:**
-```php
-$notificationList = $ionicPush->listNotifications([
-    // Number of notifications per page
-    'page_size' => 1,
-    // Selected page
-    'page' => 1,
-    // You can also pass other fields like "message_total"
-    'fields' => 'message_total'
-]);
 ```
 
-**2) Get specific notification:**
- ```php
- $notification = $ionicPush->getNotification($desiredNotificationId);
- ```
- 
 <br>
+ 
+Then you can:
 
- **3) Get list of tokens:**
+#### Device Tokens
+
+ **1) Get list of tokens:**
 ```php
-$tokenList = $ionicPush->listTokens([
+$tokenList = $ionicPush->deviceTokens->paginatedList([
     // Determines whether to include invalidated tokens
     'show_invalid' => 1,
     // Only display tokens associated with the User ID.
@@ -75,24 +55,44 @@ $tokenList = $ionicPush->listTokens([
 ]);
 ```
 
- <br>
+<br>
 
- **4) Get device information:**
- ```php
- $deviceInformation = $ionicPush->getDeviceInfo($desiredDeviceToken);
- ```
- 
- <br>
- 
-**5) Remove devices:**
+**2) Get device information related to the device token:**
 ```php
-$ionicPush->deleteDevice($desiredDeviceToken);
+$deviceInformation = $ionicPush->deviceTokens->retrieve($desiredDeviceToken);
 ```
- <br>
  
- **6) Send notifications:**
- ```php
-$ionicPush->setConfig([
+<br>
+ 
+**3) Delete a device related to the device token:**
+```php
+$deviceInformation = $ionicPush->deviceTokens->delete($desiredDeviceToken);
+```
+
+#### Notifications
+ 
+**1) Get list of notifications:**
+```php
+$notificationList = $ionicPush->notifications->paginatedList([
+    // Number of notifications per page
+    'page_size' => 1,
+    // Selected page
+    'page' => 1,
+    // You can also pass other fields like "message_total"
+    'fields' => 'message_total'
+]);
+```
+
+**2) Get specific notification:**
+```php
+$notification = $ionicPush->notifications->retrieve($desiredNotificationId);
+```
+ 
+<br>
+ 
+**3) Send notifications:**
+```php
+$ionicPush->notifications->setConfig([
     'title' => 'Your notification title',
     'tickerText' => 'Your ticker text',
     'message' => 'Your notification message. Bla, bla, bla, bla.',
@@ -108,35 +108,34 @@ $ionicPush->setConfig([
 
 You can also pass **custom data** to the notification:
 ```php
-$ionicPush->setPayload([ 
+$ionicPush->notifications->setPayload([ 
     'myCustomField' => 'This is the content of my customField',
     'anotherCustomField' => 'More custom content'
 ]);
 ```
 <br>
     
-    
 And define, if you need it, a **silent notification**:
 ```php
-$ionicPush->setSilentNotification(true);
+$ionicPush->notifications->setSilentNotification(true);
 ```
 <br>
 
 Or/and even a **scheduled notification**:
 ```php
-$ionicPush->setScheduled('2016-12-10 10:30:10');
+$ionicPush->notifications->setScheduled('2016-12-10 10:30:10');
 ```
 <br>
 
 When you have configured the notification according to your needs you can send it to some devices:
 ```php
-$ionicPush->sendPush([$desiredToken1, $desiredToken2, $desiredToken3]);
+$ionicPush->notifications->sendPush([$desiredToken1, $desiredToken2, $desiredToken3]);
 ```
 <br>
 
 Or send this to all registered devices:
 ```php
-$ionicPush->sendPushAll();
+$ionicPush->notifications->sendPushToAll();
 ```
 
 <br>
