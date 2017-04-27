@@ -21,7 +21,6 @@ In the next link you can see how to get this two configuration values: https://g
 
 ## TODO:
 
-1. Methods retrieve() and delete() of **Messages**.
 1. Methods replace(), delete() and listMessages() of **Notifications**.
 1. Mothods create(), update(), listAssociatedUsers(), associateUser() and dissociateUser() of **DeviceTokens**.
 
@@ -42,7 +41,7 @@ Then you can:
 
  **1) List tokens:**
 ```php
-$tokenList = $ionicPushApi->deviceTokens->paginatedList([
+$tokens = $ionicPushApi->deviceTokens->paginatedList([
     // Determines whether to include invalidated tokens
     'show_invalid' => 1,
     // Only display tokens associated with the User ID.
@@ -65,14 +64,28 @@ $deviceInformation = $ionicPushApi->deviceTokens->retrieve($desiredDeviceToken);
  
 **3) Delete a device related to the device token:**
 ```php
-$deviceInformation = $ionicPushApi->deviceTokens->delete($desiredDeviceToken);
+$deleteResult = $ionicPushApi->deviceTokens->delete($desiredDeviceToken);
+```
+
+### Messages
+
+**1) Retrieve specific message:**
+```php
+$message = $ionicPushApi->messages->retrieve($desiredMessageId);
+```
+
+<br>
+
+**2) Delete a message:**
+```php
+$deleteResult = $ionicPushApi->messages->delete($desiredMessageId);
 ```
 
 ### Notifications
  
 **1) List notifications:**
 ```php
-$notificationList = $ionicPushApi->notifications->paginatedList([
+$notifications = $ionicPushApi->notifications->paginatedList([
     // Number of notifications per page
     'page_size' => 1,
     // Selected page

@@ -2,9 +2,9 @@
 
 namespace Tomloprod\IonicApi;
 
+use Tomloprod\IonicApi\Api\Notifications;
 use Tomloprod\IonicApi\Api\DeviceTokens;
 use Tomloprod\IonicApi\Api\Messages;
-use Tomloprod\IonicApi\Api\Notifications;
 
 /**
  * Ionic API Push Library v 1.1.4
@@ -32,7 +32,7 @@ class Push {
      * MessagesApi instance.
      * @var Messages
      */
-    // public $messages;
+    public $messages;
 
     /**
      * Push constructor.
@@ -43,7 +43,7 @@ class Push {
     public function __construct($ionicProfile, $ionicAPIToken) {
         $this->notifications = new Notifications($ionicProfile, $ionicAPIToken);
         $this->deviceTokens = new DeviceTokens($ionicProfile, $ionicAPIToken);
-        // $this->messages = new Messages($ionicProfile, $ionicAPIToken);
+        $this->messages = new Messages($ionicProfile, $ionicAPIToken);
     }
 
 }

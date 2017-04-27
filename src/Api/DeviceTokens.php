@@ -39,7 +39,7 @@ class DeviceTokens extends Request {
     // TODO: create
 
     /**
-     * Get information about a device of a specific device token.
+     * Get information about a specific Token.
      *
      * @param string $deviceToken - Device token
      * @return array

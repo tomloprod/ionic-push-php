@@ -92,7 +92,7 @@ class Notifications extends Request {
     }
 
     /**
-     * Get information about a specific notification.
+     * Get a Notification.
      *
      * @param string $notificationId - Notification id
      * @return array
@@ -100,7 +100,7 @@ class Notifications extends Request {
     public function retrieve($notificationId) {
         $response = $this->sendRequest(
             self::METHOD_GET,
-            str_replace(':notification_id', md5($notificationId), self::$endPoints['retrieve']),
+            str_replace(':notification_id', $notificationId, self::$endPoints['retrieve']),
             $this->requestData
         );
         $this->resetRequestData();
@@ -136,6 +136,8 @@ class Notifications extends Request {
     }
 
     /**
+     * Create a Push Notification.
+     *
      * Used by "sendPush" and "sendPushAll".
      *
      * @private
