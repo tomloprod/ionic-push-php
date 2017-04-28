@@ -15,19 +15,16 @@ Ionic official documentation: [Ionic HTTP API - Push](https://docs.ionic.io/api/
     composer require tomloprod/ionic-push-php
 
 
-## $ionicProfile and $ionicAPIToken:
-
-In the next link you can see how to get this two configuration values: https://github.com/tomloprod/ionic-push-php/issues/1
-
-
-## TODO:
-
-1. Methods replace() and listMessages() of **Notifications**.
-1. Mothods listAssociatedUsers(), associateUser() and dissociateUser() of **DeviceTokens**.
-
 ## How to use:
 
-First, instance an object:
+First, make sure you have your $ionicAPIToken and your $ionicProfile:
+- (string) **$ionicAPIToken:** The device token you [registered and saved](http://docs.ionic.io/services/push/#setup).
+- (string) **$ionicProfile:** The Security Profile tag found in Settings › Certificates in the [Dashboard](https://apps.ionic.io).
+
+> More information [here](https://github.com/tomloprod/ionic-push-php/issues/1).
+
+<br>
+Then, instance an object:
 
 ```php
 use Tomloprod\IonicApi\Push;
@@ -156,7 +153,13 @@ $ionicPushApi->notifications->setConfig($notificationConfig, $payload, $silent, 
 $ionicPushApi->notifications->sendNotificationToAll(); // ...to all registered devices
 $ionicPushApi->notifications->sendNotification([$desiredToken1, $desiredToken2, $desiredToken3]); // ...to some devices
 ```
-
-<br>
     
 ##### *NOTE: You will need to parse the returned array of the methods that return information.*
+
+
+<br>
+
+## TODO:
+
+1. Methods replace() and listMessages() of **Notifications**.
+1. Mothods listAssociatedUsers(), associateUser() and dissociateUser() of **DeviceTokens**.
