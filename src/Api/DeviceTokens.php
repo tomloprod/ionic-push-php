@@ -103,12 +103,13 @@ class DeviceTokens extends Request {
      * @param string $deviceToken - Device token
      * @return array
      */
-    public function listAssociatedUsers($deviceToken) {
-        return $this->prepareRequest(
+    public function listAssociatedUsers($deviceToken, $parameters, $decodeJSON = false) {
+        $response = $this->prepareRequest(
             self::METHOD_GET, 
             $deviceToken, 
-            self::$endPoints['listAssociatedUsers']
+            self::$endPoints['listAssociatedUsers'] . '?' .  http_build_query($parameters)
         );
+        return ($decodeJSON) ? json_decode($response) : $response;
     }
 
     /**
