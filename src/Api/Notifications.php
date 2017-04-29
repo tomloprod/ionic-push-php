@@ -134,8 +134,8 @@ class Notifications extends Request {
     public function deleteAll(){
         $allDeleted = true;
         $notifications = self::paginatedList([], true);
-        // If response is not null and is an object with data, we loop through each notification and delete.
-        if($notifications!==null && is_object($notifications) && property_exists($notifications, "data")) {
+        // If response is an object with data, we loop through each notification and delete.
+        if(is_object($notifications) && property_exists($notifications, "data")) {
            foreach($notifications->data as $notification) {
                 // If delete response is not empty, the notification has not been deleted.
                 if(!empty(self::delete($notification->uuid))) {
