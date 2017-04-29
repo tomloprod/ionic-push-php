@@ -214,7 +214,7 @@ $payload = [
 // [OPTIONAL] And define, if you need it, a silent notification. Default => false
 $silent = true;
 
-// [OPTIONAL] Or/and even a scheduled dateteime. Default => ''
+// [OPTIONAL] Or/and even a scheduled notification for an indicated datetime. Default => ''
 $scheduled = '2016-12-10 10:30:10';
 
 
