@@ -160,7 +160,7 @@ class Notifications extends Request {
     /**
      * Create a Push Notification.
      *
-     * Used by "sendPush" and "sendPushAll".
+     * Used by "sendNotification" and "sendNotificationToAll".
      *
      * @private
      * @return array
