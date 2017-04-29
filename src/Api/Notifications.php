@@ -19,7 +19,7 @@ class Notifications extends Request {
     private static $endPoints = [
         'list' => '/push/notifications', // GET
         'create' => '/push/notifications', // POST
-        'retrieve' => '/push/notifications,:notification_id', // GET
+        'retrieve' => '/push/notifications/:notification_id', // GET
         'replace' => '/push/notifications/:notification_id', // PUT
         'delete' => '/push/notifications/:notification_id', // DELETE
         'listMessages' => '/push/notifications/:notification_id/messages', // GET
