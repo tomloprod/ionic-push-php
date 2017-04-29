@@ -135,7 +135,10 @@ $response = $ionicPushApi->notifications->paginatedList([
     'page' => 1,
     // You can also pass other fields like "message_total" or "overview" (string[])
     'fields' => [
-        'message_total'
+        // Total number of messages tied to each notification.
+        'message_total',
+        // Get an overview of messages delivered and failed for each notification.
+        'overview'
     ]
 ], $decodeJson);
 
