@@ -85,8 +85,7 @@ class Notifications extends Request {
      * @return array
      */
     public function paginatedList($parameters) {
-        $getParameters = http_build_query($parameters);
-        $response =  $this->sendRequest(self::METHOD_GET, self::$endPoints['list'] . '?' . $getParameters, $this->requestData);
+        $response =  $this->sendRequest(self::METHOD_GET, self::$endPoints['list'] . '?' . http_build_query($parameters), $this->requestData);
         $this->resetRequestData();
         return $response;
     }
@@ -122,7 +121,19 @@ class Notifications extends Request {
         );
     }
 
-    // TODO: list messages
+    /**
+     * List messages of the indicated notification.
+     *
+     * @param string $notificationId - Notification id
+     * @param array $parameters
+     * @return array
+     */
+    public function listMessages($notificationId, $parameters) {
+        $endPoint = str_replace(':notification_id', $notificationId, self::$endPoints['listMessages']);
+        $response =  $this->sendRequest(self::METHOD_GET, $endPoint . '?' . http_build_query($parameters), $this->requestData);
+        $this->resetRequestData();
+        return $response;
+    }
 
     /**
      * Send push notification for the indicated device tokens.
