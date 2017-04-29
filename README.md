@@ -43,7 +43,8 @@ Then you can interact (*list, remove, create, ...*) with `device tokens`, `messa
  **1) List tokens:**
  
 ```php
-// [OPTIONAL] Indicates whether the JSON response will be converted to a PHP variable before return. Default => false
+// [OPTIONAL] Indicates whether the JSON response will be converted to a PHP variable before return. 
+// Default => false
 $decodeJson = true;
 
 $response = $ionicPushApi->deviceTokens->paginatedList([
@@ -123,7 +124,8 @@ $deleteResult = $ionicPushApi->messages->delete($desiredMessageId);
  
 **1) List notifications:**
 ```php
-// [OPTIONAL] Indicates whether the JSON response will be converted to a PHP variable before return. Default => false
+// [OPTIONAL] Indicates whether the JSON response will be converted to a PHP variable before return. 
+// Default => false
 $decodeJson = true;
 
 $response = $ionicPushApi->notifications->paginatedList([
