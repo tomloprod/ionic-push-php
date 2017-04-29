@@ -85,7 +85,11 @@ class Notifications extends Request {
      * @return array
      */
     public function paginatedList($parameters) {
-        $response =  $this->sendRequest(self::METHOD_GET, self::$endPoints['list'] . '?' . http_build_query($parameters), $this->requestData);
+        $response =  $this->sendRequest(
+            self::METHOD_GET, 
+            self::$endPoints['list'] . '?' . http_build_query($parameters), 
+            $this->requestData
+        );
         $this->resetRequestData();
         return $response;
     }
@@ -130,7 +134,11 @@ class Notifications extends Request {
      */
     public function listMessages($notificationId, $parameters) {
         $endPoint = str_replace(':notification_id', $notificationId, self::$endPoints['listMessages']);
-        $response =  $this->sendRequest(self::METHOD_GET, $endPoint . '?' . http_build_query($parameters), $this->requestData);
+        $response =  $this->sendRequest(
+            self::METHOD_GET, 
+            $endPoint . '?' . http_build_query($parameters), 
+            $this->requestData
+        );
         $this->resetRequestData();
         return $response;
     }
@@ -166,7 +174,11 @@ class Notifications extends Request {
      * @return array
      */
     private function create() {
-        $response = $this->sendRequest(self::METHOD_POST, self::$endPoints['create'], $this->requestData);
+        $response = $this->sendRequest(
+            self::METHOD_POST, 
+            self::$endPoints['create'], 
+            $this->requestData
+        );
         $this->resetRequestData();
         return $response;
     }
