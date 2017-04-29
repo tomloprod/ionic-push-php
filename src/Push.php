@@ -7,7 +7,7 @@ use Tomloprod\IonicApi\Api\DeviceTokens;
 use Tomloprod\IonicApi\Api\Messages;
 
 /**
- * Ionic API Push Library v 1.1.6
+ * Ionic API Push Library v 1.1.7
  *
  * @package Tomloprod\IonicApi
  * @category  Library
