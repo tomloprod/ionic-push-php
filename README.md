@@ -42,6 +42,7 @@ Then you can interact (*list, remove, create, ...*) with `device tokens`, `messa
 
  **1) List tokens:**
 ```php
+
 $tokens = $ionicPushApi->deviceTokens->paginatedList([
     // Determines whether to include invalidated tokens (boolean)
     'show_invalid' => 1,
@@ -104,7 +105,12 @@ $deleteResult = $ionicPushApi->messages->delete($desiredMessageId);
  
 **1) List notifications:**
 ```php
-$notifications = $ionicPushApi->notifications->paginatedList([
+
+
+// [OPTIONAL] Indicates whether the JSON response will be converted to a PHP variable before return. Default => false
+$decodeJson = true;
+
+$response = $ionicPushApi->notifications->paginatedList([
     // Sets the number of items to return per page (integer)
     'page_size' => 1,
     // Sets the page number (integer)
@@ -113,7 +119,16 @@ $notifications = $ionicPushApi->notifications->paginatedList([
     'fields' => [
         'message_total'
     ]
-]);
+], $decodeJson);
+
+// If response is not null —sometimes, on fast requests, response could be null.—, you can loop the notifications data:
+if($response !== null){
+    foreach($response->data as $notification){
+        // Show the message of each notification.
+        echo $notification->config->notification->message;
+    }
+}
+
 ```
 
 **2) Retrieve specific notification:**
