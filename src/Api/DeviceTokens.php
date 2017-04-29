@@ -109,7 +109,22 @@ class DeviceTokens extends Request {
         );
     }
 
-    // TODO: associate user
+    /**
+     * Associate the indicated user with the indicated device token
+     *
+     * @param string $deviceToken - Device token
+     * @param string $userId - User id
+     * @return array
+     */
+    public function associateUser($deviceToken, $userId) {
+        // Replace :user_id by $userId
+        $endPoint = str_replace(':user_id', $userId, self::$endPoints['associateUser']);
+        return $this->prepareRequest(
+            self::METHOD_POST, 
+            $deviceToken,
+            $endPoint
+        );
+    }
 
     // TODO: dissociate user
 
