@@ -174,4 +174,4 @@ $ionicPushApi->notifications->sendNotification([$desiredToken1, $desiredToken2, 
 ## TODO:
 
 1. Methods replace() ~~and listMessages()~~ of **Notifications**.
-1. Mothods listAssociatedUsers(), associateUser() and dissociateUser() of **DeviceTokens**.
+1. Mothods ~~listAssociatedUsers(),~~ associateUser() and dissociateUser() of **DeviceTokens**.
