@@ -126,10 +126,25 @@ class DeviceTokens extends Request {
         );
     }
 
-    // TODO: dissociate user
+    /**
+     * Dissociate the indicated user with the indicated device token
+     *
+     * @param string $deviceToken - Device token
+     * @param string $userId - User id
+     * @return array
+     */
+    public function dissociateUser($deviceToken, $userId) {
+        // Replace :user_id by $userId
+        $endPoint = str_replace(':user_id', $userId, self::$endPoints['dissociateUser']);
+        return $this->prepareRequest(
+            self::METHOD_DELETE, 
+            $deviceToken, 
+            $endPoint
+        );
+    }
 
     /**
-     * Prepare requests and send to the Ionic Push API.
+     * Replace device token by token id —md5 of device token— and send to the Ionic Push API.
      *
      * @private
      * @param string $method
