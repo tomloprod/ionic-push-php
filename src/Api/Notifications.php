@@ -127,6 +127,27 @@ class Notifications extends Request {
     }
 
     /**
+     * Deletes all notifications
+     *
+     * @return boolean $allDeleted - Indicate if all notifications have been deleted
+     */
+    public function deleteAll(){
+        $allDeleted = true;
+        $notifications = self::paginatedList([], true);
+        if($notifications!==null) {
+           foreach($notifications->data as $notification) {
+                $deleteResponse = self::delete($notification->uuid);
+                if(!empty($deleteResponse)) {
+                    $allDeleted = false;
+                }
+           } 
+        } else {
+           $allDeleted = false;
+        }
+        return $allDeleted;
+    }
+    
+    /**
      * List messages of the indicated notification.
      *
      * @param string $notificationId - Notification id
