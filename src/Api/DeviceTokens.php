@@ -32,8 +32,10 @@ class DeviceTokens extends Request {
      * @return array
      */
     public function paginatedList($parameters) {
-        $getParameters = http_build_query($parameters);
-        return $this->sendRequest(self::METHOD_GET, self::$endPoints['list'] . '?' . $getParameters);
+        return $this->sendRequest(
+            self::METHOD_GET, 
+            self::$endPoints['list'] . '?' . http_build_query($parameters)
+        );
     }
 
 
@@ -44,8 +46,10 @@ class DeviceTokens extends Request {
      * @return array
      */
     public function create($parameters) {
-        $getParameters = http_build_query($parameters);
-        return $this->sendRequest(self::METHOD_POST, self::$endPoints['create'] . '?' . $getParameters);
+        return $this->sendRequest(
+            self::METHOD_POST, 
+            self::$endPoints['create'] . '?' . http_build_query($parameters)
+        );
     }
 
     /**
@@ -55,7 +59,11 @@ class DeviceTokens extends Request {
      * @return array
      */
     public function retrieve($deviceToken) {
-        return $this->prepareRequest(self::METHOD_GET, $deviceToken, self::$endPoints['retrieve']);
+        return $this->prepareRequest(
+            self::METHOD_GET, 
+            $deviceToken, 
+            self::$endPoints['retrieve']
+        );
     }
 
     /**
@@ -66,8 +74,11 @@ class DeviceTokens extends Request {
      * @return array
      */
     public function update($deviceToken, $parameters) {
-        $getParameters = http_build_query($parameters);
-        return $this->prepareRequest(self::METHOD_PATCH, $deviceToken, self::$endPoints['update'] . '?' . $getParameters);
+        return $this->prepareRequest(
+            self::METHOD_PATCH, 
+            $deviceToken, 
+            self::$endPoints['update'] . '?' . http_build_query($parameters)
+        );
     }
 
     /**
@@ -77,7 +88,11 @@ class DeviceTokens extends Request {
      * @return array
      */
     public function delete($deviceToken) {
-        return $this->prepareRequest(self::METHOD_DELETE, $deviceToken, self::$endPoints['delete']);
+        return $this->prepareRequest(
+            self::METHOD_DELETE, 
+            $deviceToken, 
+            self::$endPoints['delete']
+        );
     }
 
     // TODO: list associated users
@@ -96,7 +111,10 @@ class DeviceTokens extends Request {
      * @return array
      */
     private function prepareRequest($method, $deviceToken, $endPoint) {
-        return $this->sendRequest($method, str_replace(':token_id', md5($deviceToken), $endPoint));
+        return $this->sendRequest(
+            $method, 
+            str_replace(':token_id', md5($deviceToken), $endPoint)
+        );
     }
 
 }
