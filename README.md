@@ -43,7 +43,10 @@ Then you can interact (*list, remove, create, ...*) with `device tokens`, `messa
  **1) List tokens:**
  
 ```php
-$tokens = $ionicPushApi->deviceTokens->paginatedList([
+// [OPTIONAL] Indicates whether the JSON response will be converted to a PHP variable before return. Default => false
+$decodeJson = true;
+
+$response = $ionicPushApi->deviceTokens->paginatedList([
     // Determines whether to include invalidated tokens (boolean)
     'show_invalid' => 1,
     // Only display tokens associated with the User ID (string)
@@ -52,7 +55,16 @@ $tokens = $ionicPushApi->deviceTokens->paginatedList([
     'page_size' => 4,
     // Sets the page number (integer)
     'page' => 1
-]);
+], $decodeJson);
+
+// If response is not null —sometimes, on fast requests, response could be null—,
+// you can loop the device tokens data:
+if($response !== null){
+    foreach($response->data as $deviceToken){
+        // Show the type (ios, android, ...) of each device token.
+        echo $deviceToken->type;
+    }
+}
 ```
 
  **2) List users associated with a device token:**
@@ -125,7 +137,8 @@ $response = $ionicPushApi->notifications->paginatedList([
     ]
 ], $decodeJson);
 
-// If response is not null —sometimes, on fast requests, response could be null.—, you can loop the notifications data:
+// If response is not null —sometimes, on fast requests, response could be null—,
+// you can loop the notifications data:
 if($response !== null){
     foreach($response->data as $notification){
         // Show the message of each notification.
