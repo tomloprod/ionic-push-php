@@ -58,9 +58,8 @@ $response = $ionicPushApi->deviceTokens->paginatedList([
     'page' => 1
 ], $decodeJson);
 
-// If response is not null —sometimes, on fast requests, response could be null—,
-// you can loop the device tokens data:
-if($response !== null){
+// If response is an object with data, we loop through each device token:
+if(is_object($response) && property_exists($response, "data")) {
     foreach($response->data as $deviceToken){
         // Show the type (ios, android, ...) of each device token.
         echo $deviceToken->type;
@@ -151,9 +150,8 @@ $response = $ionicPushApi->notifications->paginatedList([
     ]
 ], $decodeJson);
 
-// If response is not null —sometimes, on fast requests, response could be null—,
-// you can loop the notifications data:
-if($response !== null){
+// If response is an object with data, we loop through each notification:
+if(is_object($response) && property_exists($response, "data")) {
     foreach($response->data as $notification){
         // Show the message of each notification.
         echo $notification->config->notification->message;
