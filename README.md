@@ -173,7 +173,14 @@ $notification = $ionicPushApi->notifications->retrieve($desiredNotificationId);
 $deleteResult = $ionicPushApi->notifications->delete($desiredNotificationId);
 ```
 
-**4) List messages of a notification:**
+**4) Delete all notifications:**
+
+```php
+// Return true if all notifications have been deleted.
+$areAllDeleted = $ionicPushApi->notifications->deleteAll();
+```
+
+**5) List messages of a notification:**
 
 ```php
 $messages = $ionicPushApi->notifications->listMessages($desiredNotificationId, [
@@ -184,7 +191,7 @@ $messages = $ionicPushApi->notifications->listMessages($desiredNotificationId, [
 ])
  ```
  
-**5) Send notifications:**
+**6) Send notifications:**
 
 ```php
 // Configuration of the notification
