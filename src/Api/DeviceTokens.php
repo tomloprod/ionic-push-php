@@ -95,14 +95,26 @@ class DeviceTokens extends Request {
         );
     }
 
-    // TODO: list associated users
+    /**
+     * List users associated with the indicated token
+     *
+     * @param string $deviceToken - Device token
+     * @return array
+     */
+    public function listAssociatedUsers($deviceToken) {
+        return $this->prepareRequest(
+            self::METHOD_GET, 
+            $deviceToken, 
+            self::$endPoints['listAssociatedUsers']
+        );
+    }
 
     // TODO: associate user
 
     // TODO: dissociate user
 
     /**
-     * Used by "retrieve" and "deleteDevice".
+     * Prepare requests and send to the Ionic Push API.
      *
      * @private
      * @param string $method
@@ -111,9 +123,10 @@ class DeviceTokens extends Request {
      * @return array
      */
     private function prepareRequest($method, $deviceToken, $endPoint) {
+        $tokenId = md5($deviceToken);
         return $this->sendRequest(
             $method, 
-            str_replace(':token_id', md5($deviceToken), $endPoint)
+            str_replace(':token_id', $tokenId, $endPoint)
         );
     }
 
