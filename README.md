@@ -38,7 +38,7 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 
 Then you can interact (*list, remove, create, ...*) with `device tokens`, `messages` and `notifications`:
 
-### Device Tokens
+### [Device Tokens]
 
  **1) List tokens:**
  
@@ -115,7 +115,7 @@ $updatedDeviceInformation = $ionicPushApi->deviceTokens->update($desiredDeviceTo
 $deleteResult = $ionicPushApi->deviceTokens->delete($desiredDeviceToken);
 ```
 
-### Messages
+### [Messages]
 
 **1) Retrieve specific message:**
 
@@ -129,7 +129,7 @@ $message = $ionicPushApi->messages->retrieve($desiredMessageId);
 $deleteResult = $ionicPushApi->messages->delete($desiredMessageId);
 ```
 
-### Notifications
+### [Notifications]
  
 **1) List notifications:**
 ```php
