@@ -117,8 +117,18 @@ $notification = $ionicPushApi->notifications->retrieve($desiredNotificationId);
 ```php
 $deleteResult = $ionicPushApi->notifications->delete($desiredNotificationId);
 ```
+
+**4) List messages of a notification:**
+```php
+$messages = $ionicPushApi->notifications->listMessages($desiredNotificationId, [
+    // Sets the number of items to return per page (integer)
+    'page_size' => 1,
+    // Sets the page number (integer)
+    'page' => 1
+])
+ ```
  
-**4) Send notifications:**
+**5) Send notifications:**
 ```php
 // Configuration of the notification
 $notificationConfig = [
@@ -132,6 +142,8 @@ $notificationConfig = [
         'badge' => 1
     ]
 ];
+
+
 
 // [OPTIONAL] You can also pass custom data to the notification. Default => []
 $payload = [ 
