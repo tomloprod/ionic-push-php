@@ -18,7 +18,7 @@ class DeviceTokens extends Request {
         'list' => '/push/tokens', // GET
         'create' => '/push/tokens', // POST
         'retrieve' => '/push/tokens/:token_id', // GET
-        'update' => ' /push/tokens/:token_id', // PATCH
+        'update' => '/push/tokens/:token_id', // PATCH
         'delete' => '/push/tokens/:token_id', // DELETE,
         'listAssociatedUsers' =>'/push/tokens/:token_id/users', // GET
         'associateUser' =>'/push/tokens/:token_id/users/:user_id', // POST
