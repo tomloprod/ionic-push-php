@@ -9,22 +9,26 @@ Ionic official documentation: [Ionic HTTP API - Push](https://docs.ionic.io/api/
 - PHP 5.1+
 - cURL
 
-
 ## Installation:
 
     composer require tomloprod/ionic-push-php
 
+## Configuration:
 
-## How to use:
 
-First, make sure you have your $ionicAPIToken and your $ionicProfile:
-- (string) **$ionicAPIToken:** The device token you [registered and saved](http://docs.ionic.io/services/push/#setup).
-- (string) **$ionicProfile:** The Security Profile tag found in Settings › Certificates in the [Dashboard](https://apps.ionic.io).
+First, make sure you have your `$ionicAPIToken` and your `$ionicProfile`:
+
+- (string) **$ionicAPIToken:** The API token that you must create in *Settings › API Keys* in the [Dashboard](https://apps.ionic.io).
+- (string) **$ionicProfile:** The Security Profile tag found in *Settings › Certificates* in the [Dashboard](https://apps.ionic.io)
 
 > More information [here](https://github.com/tomloprod/ionic-push-php/issues/1).
 
-<br>
-Then, instance an object:
+If you don't know how to configure your ionic app, you can take a look here: [Setup Ionic Push](http://docs.ionic.io/services/push/#setup)
+
+
+## How to use:
+
+First, instance an object as follow:
 
 ```php
 use Tomloprod\IonicApi\Push;
@@ -32,7 +36,6 @@ use Tomloprod\IonicApi\Push;
 $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 ```
 
- 
 Then you can:
 
 ### Device Tokens
@@ -147,8 +150,6 @@ $notificationConfig = [
         'badge' => 1
     ]
 ];
-
-
 
 // [OPTIONAL] You can also pass custom data to the notification. Default => []
 $payload = [ 
