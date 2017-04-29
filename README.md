@@ -36,7 +36,7 @@ use Tomloprod\IonicApi\Push;
 $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 ```
 
-Then you can:
+Then you can interact (*list, remove, create, ...*) with `device tokens`, `messages` and `notifications`:
 
 ### Device Tokens
 
