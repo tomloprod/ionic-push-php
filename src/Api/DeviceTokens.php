@@ -29,13 +29,15 @@ class DeviceTokens extends Request {
      * Paginated listing of tokens.
      *
      * @param array $parameters
+     * @param boolean $decodeJSON - Indicates whether the JSON response will be converted to a PHP variable before return.
      * @return array
      */
-    public function paginatedList($parameters) {
-        return $this->sendRequest(
+    public function paginatedList($parameters, $decodeJSON = false) {
+        $response = $this->sendRequest(
             self::METHOD_GET, 
             self::$endPoints['list'] . '?' . http_build_query($parameters)
         );
+        return ($decodeJSON) ? json_decode($response) : $response;
     }
 
 
