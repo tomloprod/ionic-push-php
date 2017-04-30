@@ -82,33 +82,34 @@ class Notifications extends Request {
      * Paginated listing of Push Notifications.
      *
      * @param array $parameters
-     * @param boolean $decodeJSON - Indicates whether the JSON response will be converted to a PHP variable before return.
-     * @return array
+     * @param boolean $decodeResponse - Indicates whether the JSON response will be converted to a PHP variable before return.
+     * @return array|object|null $response - An array when $decodeResponse is false, an object when $decodeResponse is true, and null when $decodeResponse is true and there is no data on response.
      */
-    public function paginatedList($parameters = [], $decodeJSON = true) {
+    public function paginatedList($parameters = [], $decodeResponse = true) {
         $response =  $this->sendRequest(
             self::METHOD_GET, 
             self::$endPoints['list'] . '?' . http_build_query($parameters), 
             $this->requestData
         );
         $this->resetRequestData();
-        return ($decodeJSON) ? json_decode($response) : $response;
+		return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
     /**
      * Get a Notification.
      *
      * @param string $notificationId - Notification id
-     * @return array
+     * @param boolean $decodeResponse - Indicates whether the JSON response will be converted to a PHP variable before return.	 
+     * @return array|object|null $response - An array when $decodeResponse is false, an object when $decodeResponse is true, and null when $decodeResponse is true and there is no data on response.
      */
-    public function retrieve($notificationId) {
+    public function retrieve($notificationId, $decodeResponse = true) {
         $response = $this->sendRequest(
             self::METHOD_GET,
             str_replace(':notification_id', $notificationId, self::$endPoints['retrieve']),
             $this->requestData
         );
         $this->resetRequestData();
-        return $response;
+        return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
     // TODO: replace
@@ -117,13 +118,14 @@ class Notifications extends Request {
      * Deletes a notification.
      *
      * @param $notificationId
-     * @return array
+     * @return boolean
      */
     public function delete($notificationId) {
-        return $this->sendRequest(
+        $response = $this->sendRequest(
             self::METHOD_DELETE,
             str_replace(':notification_id', $notificationId, self::$endPoints['delete'])
         );
+		return (empty($response)) ? true : false;
     }
 
     /**
@@ -153,9 +155,10 @@ class Notifications extends Request {
      *
      * @param string $notificationId - Notification id
      * @param array $parameters
-     * @return array
+     * @param boolean $decodeResponse - Indicates whether the JSON response will be converted to a PHP variable before return.	 
+     * @return array|object|null $response - An array when $decodeResponse is false, an object when $decodeResponse is true, and null when $decodeResponse is true and there is no data on response.
      */
-    public function listMessages($notificationId, $parameters) {
+    public function listMessages($notificationId, $parameters = [], $decodeResponse = true) {
         $endPoint = str_replace(':notification_id', $notificationId, self::$endPoints['listMessages']);
         $response =  $this->sendRequest(
             self::METHOD_GET, 
@@ -163,7 +166,7 @@ class Notifications extends Request {
             $this->requestData
         );
         $this->resetRequestData();
-        return $response;
+		return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
     /**
@@ -179,7 +182,7 @@ class Notifications extends Request {
     }
 
     /**
-     * Send push notificatoin for all registered devices.
+     * Send push notification for all registered devices.
      *
      * @return array
      */
@@ -218,15 +221,13 @@ class Notifications extends Request {
     /**
      * Validates a datetime (format YYYY-MM-DD HH:MM:SS)
      *
-     * @param string $datetime
+     * @param string $dateTime
      * @return bool
      */
-    private function isDatetime($datetime)
-    {
-        if (preg_match('/^(\d{4})-(\d\d?)-(\d\d?) (\d\d?):(\d\d?):(\d\d?)$/', $datetime, $matches)) {
+    private function isDatetime($dateTime) {
+        if (preg_match('/^(\d{4})-(\d\d?)-(\d\d?) (\d\d?):(\d\d?):(\d\d?)$/', $dateTime, $matches)) {
             return checkdate($matches[2], $matches[3], $matches[1]) && $matches[4] / 24 < 1 && $matches[5] / 60 < 1 && $matches[6] / 60 < 1;
         }
-
         return false;
     }
 

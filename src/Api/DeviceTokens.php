@@ -29,15 +29,15 @@ class DeviceTokens extends Request {
      * Paginated listing of tokens.
      *
      * @param array $parameters
-     * @param boolean $decodeJSON - Indicates whether the JSON response will be converted to a PHP variable before return.
-     * @return array
+     * @param boolean $decodeResponse - Indicates whether the JSON response will be converted to a PHP variable before return.	 
+     * @return array|object|null $response - An array when $decodeResponse is false, an object when $decodeResponse is true, and null when $decodeResponse is true and there is no data on response.
      */
-    public function paginatedList($parameters, $decodeJSON = true) {
+    public function paginatedList($parameters = [], $decodeResponse = true) {
         $response = $this->sendRequest(
             self::METHOD_GET, 
             self::$endPoints['list'] . '?' . http_build_query($parameters)
         );
-        return ($decodeJSON) ? json_decode($response) : $response;
+        return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
 
@@ -58,14 +58,16 @@ class DeviceTokens extends Request {
      * Get information about a specific Token.
      *
      * @param string $deviceToken - Device token
-     * @return array
+     * @param boolean $decodeResponse - Indicates whether the JSON response will be converted to a PHP variable before return.	 
+     * @return array|object|null $response - An array when $decodeResponse is false, an object when $decodeResponse is true, and null when $decodeResponse is true and there is no data on response.
      */
-    public function retrieve($deviceToken) {
-        return $this->prepareRequest(
+    public function retrieve($deviceToken, $decodeResponse = true) {
+        $response = $this->prepareRequest(
             self::METHOD_GET, 
             $deviceToken, 
             self::$endPoints['retrieve']
         );
+		return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
     /**
@@ -87,29 +89,32 @@ class DeviceTokens extends Request {
      * Delete a device related to the device token.
      *
      * @param string $deviceToken - Device token
-     * @return array
+     * @return boolean
      */
     public function delete($deviceToken) {
-        return $this->prepareRequest(
+        $response = $this->prepareRequest(
             self::METHOD_DELETE, 
             $deviceToken, 
             self::$endPoints['delete']
         );
+		return (empty($response)) ? true : false;
     }
 
     /**
      * List users associated with the indicated token
      *
      * @param string $deviceToken - Device token
-     * @return array
+	 * @param array $parameters - Query parameters (pagination).
+     * @param boolean $decodeResponse - Indicates whether the JSON response will be converted to a PHP variable before return.	 
+     * @return array|object|null $response - An array when $decodeResponse is false, an object when $decodeResponse is true, and null when $decodeResponse is true and there is no data on response.
      */
-    public function listAssociatedUsers($deviceToken, $parameters, $decodeJSON = true) {
+    public function listAssociatedUsers($deviceToken, $parameters = [], $decodeResponse = true) {
         $response = $this->prepareRequest(
             self::METHOD_GET, 
             $deviceToken, 
             self::$endPoints['listAssociatedUsers'] . '?' .  http_build_query($parameters)
         );
-        return ($decodeJSON) ? json_decode($response) : $response;
+		return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
     /**
@@ -117,16 +122,17 @@ class DeviceTokens extends Request {
      *
      * @param string $deviceToken - Device token
      * @param string $userId - User id
-     * @return array
+     * @return boolean
      */
     public function associateUser($deviceToken, $userId) {
         // Replace :user_id by $userId
         $endPoint = str_replace(':user_id', $userId, self::$endPoints['associateUser']);
-        return $this->prepareRequest(
+        $response = $this->prepareRequest(
             self::METHOD_POST, 
             $deviceToken,
             $endPoint
         );
+		return (empty($response)) ? true : false;
     }
 
     /**
@@ -134,16 +140,17 @@ class DeviceTokens extends Request {
      *
      * @param string $deviceToken - Device token
      * @param string $userId - User id
-     * @return array
+     * @return boolean
      */
     public function dissociateUser($deviceToken, $userId) {
         // Replace :user_id by $userId
         $endPoint = str_replace(':user_id', $userId, self::$endPoints['dissociateUser']);
-        return $this->prepareRequest(
+        $response = $this->prepareRequest(
             self::METHOD_DELETE, 
             $deviceToken, 
             $endPoint
         );
+		return (empty($response)) ? true : false;
     }
 
     /**
