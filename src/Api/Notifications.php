@@ -92,7 +92,7 @@ class Notifications extends Request {
             $this->requestData
         );
         $this->resetRequestData();
-		return ($decodeResponse) ? self::decodeResponse($response) : $response;
+	return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
     /**
@@ -125,7 +125,7 @@ class Notifications extends Request {
             self::METHOD_DELETE,
             str_replace(':notification_id', $notificationId, self::$endPoints['delete'])
         );
-		return (empty($response)) ? true : false;
+	return (empty($response)) ? true : false;
     }
 
     /**
@@ -166,7 +166,7 @@ class Notifications extends Request {
             $this->requestData
         );
         $this->resetRequestData();
-		return ($decodeResponse) ? self::decodeResponse($response) : $response;
+	return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
     /**
