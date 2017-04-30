@@ -47,15 +47,15 @@ class Request {
      * @param boolean $decodeJSON - Indicates whether the JSON response will be converted to a PHP variable before return.
      * @return object|null $response - An object when $response has data and null when there is no data.
      */
-	public function decodeResponse($response) {
-		$response = json_decode($response);
-		// If is an object with data property and data has elements.
-		if(is_object($response) && property_exists($response, "data") && count($response->data) > 0) {
-			return $response;
-		}else{
-			return null;
-		}
+    public function decodeResponse($response) {
+	$response = json_decode($response);
+	// If is an object with data property and data has elements.
+	if(is_object($response) && property_exists($response, "data") && count($response->data) > 0) {
+	    return $response;
+	}else{
+	    return null;
 	}
+    }
 
     /**
      * Send requests to the Ionic Push API.
@@ -98,9 +98,9 @@ class Request {
                 break;
         }
 	
-		if (!empty($jsonData)) {
-			curl_setopt($curlHandler, CURLOPT_POSTFIELDS, $jsonData);
-		}
+	if (!empty($jsonData)) {
+	    curl_setopt($curlHandler, CURLOPT_POSTFIELDS, $jsonData);
+	}
 
         curl_setopt($curlHandler, CURLINFO_HEADER_OUT, true);
         curl_setopt($curlHandler, CURLOPT_URL, $endPoint);
