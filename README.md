@@ -89,7 +89,7 @@ $deviceToken = "c686...";
 $userId = "a99ee...";
 $associated = $ionicPushApi->deviceTokens->associateUser($deviceToken, $userId);
 if($associated) {
-	echo "This user has been associated with this device token!";
+    echo "This user has been associated with this device token!";
 }
 ```
 
@@ -100,7 +100,7 @@ $deviceToken = "c686...";
 $userId = "a99ee...";
 $dissociated = $ionicPushApi->deviceTokens->dissociateUser($deviceToken, $userId);
 if($dissociated) {
-	echo "This user has been dissociated with this device token!";
+    echo "This user has been dissociated with this device token!";
 }
 ```
 
@@ -120,13 +120,13 @@ $createdDeviceToken = $ionicPushApi->deviceTokens->create([
 ```php
 $deviceTokenInfo = $ionicPushApi->deviceTokens->retrieve($desiredDeviceToken);
 if($deviceTokenInfo !== null){
-	$id = $deviceTokenInfo->data->id; // (string)
-	$token = $deviceTokenInfo->data->token; // (string)
-	$valid = $deviceTokenInfo->data->valid; // (boolean)
-	$invalidated = $deviceTokenInfo->data->invalidated; // invalidated datetime (string)
-	$type = $deviceTokenInfo->data->type; // type of device (ios, android, ...) (string)
-	$createdAt = $deviceTokenInfo->data->created; // created datetime (string)
-	$appID = $deviceTokenInfo->data->app_id; // (string)
+    $id = $deviceTokenInfo->data->id; // (string)
+    $token = $deviceTokenInfo->data->token; // (string)
+    $valid = $deviceTokenInfo->data->valid; // (boolean)
+    $invalidated = $deviceTokenInfo->data->invalidated; // invalidated datetime (string)
+    $type = $deviceTokenInfo->data->type; // type of device (ios, android, ...) (string)
+    $createdAt = $deviceTokenInfo->data->created; // created datetime (string)
+    $appID = $deviceTokenInfo->data->app_id; // (string)
 }
 ```
 
@@ -196,16 +196,16 @@ $notification = $ionicPushApi->notifications->retrieve($desiredNotificationId);
 
 // If $notification is not null, you can see all the notification data:
 if($notification !== null) {
-	$notificationID = $notification->data->uuid; // (string)
-	$title = $notification->data->config->notification->title; // (string)
-	$message = $notification->data->config->notification->message; // (string)
-	$createdAt = $notification->data->created; // (dateTime)
-	// If "send_to_all" property exist, $sendToAll is true.
-	$sendToAll = (property_exists($notification->data->config, "send_to_all")) ? true : false ; // (boolean)
-	// If $sendToAll is false, the notification has related tokens
-	if(!$sentToAll) {
-		$receiverTokens = $notification->data->config->tokens; // (array of strings)
-	}
+    $notificationID = $notification->data->uuid; // (string)
+    $title = $notification->data->config->notification->title; // (string)
+    $message = $notification->data->config->notification->message; // (string)
+    $createdAt = $notification->data->created; // (dateTime)
+    // If "send_to_all" property exist, $sendToAll is true.
+    $sendToAll = (property_exists($notification->data->config, "send_to_all")) ? true : false ; // (boolean)
+    // If $sendToAll is false, the notification has related tokens
+    if(!$sentToAll) {
+        $receiverTokens = $notification->data->config->tokens; // (array of strings)
+    }
 }
 ```
  
@@ -215,7 +215,7 @@ if($notification !== null) {
 // Return true if the notification has been deleted.
 $deleted = $ionicPushApi->notifications->delete($desiredNotificationId);
 if($deleted) {
-	echo "Notification has been deleted!";
+    echo "Notification has been deleted!";
 }
 ```
 
@@ -236,15 +236,15 @@ $messages = $ionicPushApi->notifications->listMessages($desiredNotificationId, [
     'page' => 1
 ])
 if($messages !== null) {
-	foreach($messages->data as $message){
-		// Message data
-		$userId = $message->user_id; // (string)
-		$uuid = $message->uuid; // (string)
-		$createdAt = $message->created;  // created datetime (string)
-		$relatedNotificationUUID = $message->notification; // (string)
-		// Related token data
-		$relatedToken = $message->token; // (object)
-	}
+    foreach($messages->data as $message){
+        // Message data
+        $userId = $message->user_id; // (string)
+        $uuid = $message->uuid; // (string)
+        $createdAt = $message->created;  // created datetime (string)
+        $relatedNotificationUUID = $message->notification; // (string)
+        // Related token data
+        $relatedToken = $message->token; // (object)
+    }
 }
  ```
  
