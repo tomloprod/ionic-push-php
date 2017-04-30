@@ -67,7 +67,7 @@ class DeviceTokens extends Request {
             $deviceToken, 
             self::$endPoints['retrieve']
         );
-		return ($decodeResponse) ? self::decodeResponse($response) : $response;
+	return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
     /**
@@ -97,7 +97,7 @@ class DeviceTokens extends Request {
             $deviceToken, 
             self::$endPoints['delete']
         );
-		return (empty($response)) ? true : false;
+	return (empty($response)) ? true : false;
     }
 
     /**
@@ -114,7 +114,7 @@ class DeviceTokens extends Request {
             $deviceToken, 
             self::$endPoints['listAssociatedUsers'] . '?' .  http_build_query($parameters)
         );
-		return ($decodeResponse) ? self::decodeResponse($response) : $response;
+	return ($decodeResponse) ? self::decodeResponse($response) : $response;
     }
 
     /**
@@ -132,7 +132,7 @@ class DeviceTokens extends Request {
             $deviceToken,
             $endPoint
         );
-		return (empty($response)) ? true : false;
+	return (empty($response)) ? true : false;
     }
 
     /**
@@ -150,7 +150,7 @@ class DeviceTokens extends Request {
             $deviceToken, 
             $endPoint
         );
-		return (empty($response)) ? true : false;
+	return (empty($response)) ? true : false;
     }
 
     /**
