@@ -32,7 +32,7 @@ class DeviceTokens extends Request {
      * @param boolean $decodeJSON - Indicates whether the JSON response will be converted to a PHP variable before return.
      * @return array
      */
-    public function paginatedList($parameters, $decodeJSON = false) {
+    public function paginatedList($parameters, $decodeJSON = true) {
         $response = $this->sendRequest(
             self::METHOD_GET, 
             self::$endPoints['list'] . '?' . http_build_query($parameters)
@@ -103,7 +103,7 @@ class DeviceTokens extends Request {
      * @param string $deviceToken - Device token
      * @return array
      */
-    public function listAssociatedUsers($deviceToken, $parameters, $decodeJSON = false) {
+    public function listAssociatedUsers($deviceToken, $parameters, $decodeJSON = true) {
         $response = $this->prepareRequest(
             self::METHOD_GET, 
             $deviceToken, 
