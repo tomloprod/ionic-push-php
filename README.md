@@ -250,22 +250,64 @@ if($messages !== null) {
  
 **6) Send notifications:**
 
+
 ```php
+/**
+* ANDROID [OPTIONAL] PARAMETERS
+*/
+
+// Filename of the Icon to display with the notification (string)
+$icon = "icon";
+
+// Filename or URI of an image file to display with the notification (string)
+$image = "image";
+
+// Indicates whether each notification message results in a new entry on the notification center on Android. 
+// If not set, each request creates a new notification. 
+// If set, and a notification with the same tag is already being shown, the new notification replaces the existing one in notification center.
+$tag = "yourTagIfYouNeedIt";
+
+// When this parameter is set to true, it indicates that the message should not be sent until the device becomes active. (boolean)
+$delayWhileIdle = false;
+
+// Identifies a group of messages that can be collapsed, so that only the last message gets sent when delivery can be resumed. (string)
+$collapseKey = "group1";
+
+
+/**
+* IOS [OPTIONAL] PARAMETERS
+*/
+
+// Message Priority. A value of 10 will cause APNS to attempt immediate delivery. 
+// A value of 5 will attempt a delivery which is convenient for battery life. (integer)
+$priority = 10;
+
+// The number to display as the badge of the app icon (integer)
+$badge = 1;
+
+// Alert Title, only applicable for iWatch devices
+$iWatchTitle = "Hi!";
+
 // Configuration of the notification
 $notificationConfig = [
     'title' => 'Your notification title',
     'message' => 'Your notification message. Bla, bla, bla, bla.',
     'android' => [
-        'tag' => 'YourTagIfYouNeedIt'
+        'tag' => $tag,
+        'icon' => $icon,
+        'image' => $image,
+        'delay_while_idle' => $delayWhileIdle,
+        'collapse_key' => $collapseKey
     ],
     'ios' => [
-        'priority' => 10,
-        'badge' => 1
+        'priority' => $priority,
+        'badge' => $badge,
+        'title' => $iWatchTitle
     ]
 ];
 
 // [OPTIONAL] You can also pass custom data to the notification. Default => []
-$payload = [ 
+$notificationPayload = [ 
     'myCustomField' => 'This is the content of my customField',
     'anotherCustomField' => 'More custom content'
 ];
@@ -276,9 +318,11 @@ $silent = true;
 // [OPTIONAL] Or/and even a scheduled notification for an indicated datetime. Default => ''
 $scheduled = '2016-12-10 10:30:10';
 
+// [OPTIONAL] Filename of audio file to play when a notification is received. Setting this to default will use the default device notification sound. Default => 'default'
+$sound = 'default';
 
 // Configure notification:
-$ionicPushApi->notifications->setConfig($notificationConfig, $payload, $silent, $scheduled);
+$ionicPushApi->notifications->setConfig($notificationConfig, $notificationPayload, $silent, $scheduled, $sound);
 
 // Send notification...
 $ionicPushApi->notifications->sendNotificationToAll(); // ...to all registered devices
