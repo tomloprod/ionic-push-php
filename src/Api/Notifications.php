@@ -44,9 +44,10 @@ class Notifications extends Request {
      * @param array $notificationData
      * @param array $payloadData - Custom extra data
      * @param bool $silentNotification - Determines if the message should be delivered as a silent notification.
-     * @param string $dateTime - Time to start delivery of the notification Y-m-d H:i:s format
+     * @param string $scheduledDateTime - Time to start delivery of the notification Y-m-d H:i:s format
+     * @param string $sound - Filename of audio file to play when a notification is received.
      */
-    public function setConfig($notificationData, $payloadData = [], $silentNotification = false, $dateTime = '') {
+    public function setConfig($notificationData, $payloadData = [], $silentNotification = false, $scheduledDateTime = '', $sound = 'default') {
         if (!is_array($notificationData)) {
             $notificationData = [$notificationData];
         }
@@ -72,10 +73,14 @@ class Notifications extends Request {
         }
 
         // scheduled
-        if($this->isDatetime($dateTime)) {
+        if($this->isDatetime($scheduledDateTime)) {
             // Convert dateTime to RFC3339
-            $this->requestData['scheduled'] = date("c", strtotime($dateTime));
+            $this->requestData['scheduled'] = date("c", strtotime($scheduledDateTime));
         }
+	    
+	// sound
+ 	$this->requestData['notification']['android']['sound'] = $sound;
+    	$this->requestData['notification']['ios']['sound'] = $sound;
     }
 
     /**
