@@ -253,7 +253,7 @@ if($messages !== null) {
 
 ```php
 /**
-* ANDROID [OPTIONAL] PARAMETERS
+* ANDROID [OPTIONAL] CONFIG PARAMETERS
 */
 
 // Filename of the Icon to display with the notification (string)
@@ -275,7 +275,7 @@ $collapseKey = "group1";
 
 
 /**
-* IOS [OPTIONAL] PARAMETERS
+* IOS [OPTIONAL] CONFIG PARAMETERS
 */
 
 // Message Priority. A value of 10 will cause APNS to attempt immediate delivery. 
@@ -288,7 +288,8 @@ $badge = 1;
 // Alert Title, only applicable for iWatch devices
 $iWatchTitle = "Hi!";
 
-// Configuration of the notification
+
+// Assign the previously defined configuration parameters to each platform, as well as the title and message:
 $notificationConfig = [
     'title' => 'Your notification title',
     'message' => 'Your notification message. Bla, bla, bla, bla.',
