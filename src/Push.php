@@ -9,7 +9,7 @@ use Tomloprod\IonicApi\Api\Messages;
 /**
  * Ionic API Push Library
  *
- * @version 1.2.1
+ * @version 1.3.0
  * @package Tomloprod\IonicApi
  * @category  Library
  * @author  Tomás L.R (@tomloprod)
