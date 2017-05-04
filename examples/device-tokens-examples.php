@@ -30,7 +30,7 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
     }
     else {
         ?>
-        <li>Error response: Code <?= $response->status ?></li>
+        <li>Error! Code: <?= $response->status ?> | Message: <?= $response->getErrorMessage()?></li>
         <?
     }
     ?>
@@ -56,7 +56,7 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
     }
     else {
         ?>
-        <li>Error response: Code <?= $response->status ?></li>
+        <li>Error! Code: <?= $response->status ?> | Message: <?= $response->getErrorMessage()?></li>
         <?
     }
     ?>

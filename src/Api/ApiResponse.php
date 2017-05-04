@@ -45,7 +45,7 @@ class ApiResponse {
      * @param $response
      * @param number $httpStatusCode
      */
-    function __construct($response, number $httpStatusCode) {
+    public function __construct($response, number $httpStatusCode) {
         $this->status = $httpStatusCode;
         $response = json_decode($response, true);
 
@@ -68,6 +68,19 @@ class ApiResponse {
                 $this->error = $response['error'];
                 break;
         }
+    }
+
+    /**
+     * Returns a quick summary about the error that occurred.
+     *
+     * @return string
+     */
+    public function getErrorMessage() {
+        if(empty($this->error)) {
+            return "Sorry, there is no error message!";
+        }
+
+        return $this->error['message'];
     }
 
 }
