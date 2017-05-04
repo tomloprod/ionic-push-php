@@ -1,59 +1,63 @@
-<?php
+<?
 use Tomloprod\IonicApi\Push;
+
+$ionicProfile = "yourIonicProfile";
+$ionicAPIToken = "youtIonicApiToken";
+
 $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 ?>
 
-<h1>IMPORTANT! - Examples <b>DEPRECATED</b> since 1.3.0</h1>
-
-<h2>List all device tokens:</h2>
+<h1>List all device tokens:</h1>
 
 <ul>
-    <?php
-    $deviceTokens = $ionicPushApi->deviceTokens->paginatedList();
+    <?
+    $response = $ionicPushApi->deviceTokens->paginatedList();
     // If $deviceTokens is not null, you can loop through the device tokens.
-    if($deviceTokens !== null){
-        foreach($deviceTokens->data as $deviceToken){
-    ?>
-        <li>    
-            <p> <b>Device token ID:</b> <?php echo $deviceToken->id; ?> </p>
-            <p> <b>Token:</b> <?php echo $deviceToken->token; ?> </p>
-            <p> <b>Valid:</b> <?php echo $deviceToken->valid; ?> </p>
-            <p> <b>Invalidated:</b> <?php echo $deviceToken->invalidated; ?> </p>
-            <p> <b>Type:</b> <?php echo $deviceToken->type; ?> </p>
-            <p> <b>Created at:</b> <?php echo $deviceToken->created; ?> </p>
-            <p> <b>App ID:</b> <?php echo $deviceToken->app_id; ?> </p>
-        </li>
-    <?php 
+    if($response->success) {
+        foreach($response->data as $deviceToken) {
+            ?>
+            <li>
+                <p><b>Device token ID:</b> <?= $deviceToken['id']; ?> </p>
+                <p><b>Token:</b> <?= $deviceToken['token']; ?> </p>
+                <p><b>Valid:</b> <?= $deviceToken['valid']; ?> </p>
+                <p><b>Invalidated:</b> <?= $deviceToken['invalidated']; ?> </p>
+                <p><b>Type:</b> <?= $deviceToken['type']; ?> </p>
+                <p><b>Created at:</b> <?= $deviceToken['created']; ?> </p>
+                <p><b>App ID:</b> <?= $deviceToken['app_id']; ?> </p>
+            </li>
+            <?
         }
-    } else {
-    ?>
-            <li>Response is null!</li>
-    <?php
+    }
+    else {
+        ?>
+        <li>Error response: Code <?= $response->status ?></li>
+        <?
     }
     ?>
 </ul>
 
-<h2>Retrieve device token info by token:</h2>
+<h1>Retrieve device token info by token:</h1>
 
 <ul>
-    <?php
-    $deviceToken = $ionicPushApi->deviceTokens->retrieve("4c4ea40...");
-    if($deviceToken !== null){
-    ?>
-        <li>    
-            <p> <b>Device token ID:</b> <?php echo $deviceToken->data->id; ?> </p>
-            <p> <b>Token:</b> <?php echo $deviceToken->data->token; ?> </p>
-            <p> <b>Valid:</b> <?php echo $deviceToken->data->valid; ?> </p>
-            <p> <b>Invalidated:</b> <?php echo $deviceToken->data->invalidated; ?> </p>
-            <p> <b>Type:</b> <?php echo $deviceToken->data->type; ?> </p>
-            <p> <b>Created at:</b> <?php echo $deviceToken->data->created; ?> </p>
-            <p> <b>App ID:</b> <?php echo $deviceToken->data->app_id; ?> </p>
+    <?
+    $response = $ionicPushApi->deviceTokens->retrieve("4c4ea40...");
+    if($response->success) {
+        ?>
+        <li>
+            <p><b>Device token ID:</b> <?= $response->data['id']; ?> </p>
+            <p><b>Token:</b> <?= $response->data['token']; ?> </p>
+            <p><b>Valid:</b> <?= $response->data['valid']; ?> </p>
+            <p><b>Invalidated:</b> <?= $response->data['invalidated']; ?> </p>
+            <p><b>Type:</b> <?= $response->data['type']; ?> </p>
+            <p><b>Created at:</b> <?= $response->data['created']; ?> </p>
+            <p><b>App ID:</b> <?= $response->data['app_id']; ?> </p>
         </li>
-    <?php 
-    } else {
-    ?>
-            <li>Response is null!</li>
-    <?php
+        <?
+    }
+    else {
+        ?>
+        <li>Error response: Code <?= $response->status ?></li>
+        <?
     }
     ?>
 </ul>

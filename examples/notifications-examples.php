@@ -1,77 +1,60 @@
-<?php
+<?
 use Tomloprod\IonicApi\Push;
+
+$ionicProfile = "yourIonicProfile";
+$ionicAPIToken = "youtIonicApiToken";
+
 $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 ?>
 
-<h1>IMPORTANT! - Examples <b>DEPRECATED</b> since 1.3.0</h1>
 
-<h2>List all notifications and get data:</h2>
+<h1>List all notifications and get data:</h1>
 
 <ul>
-    <?php
-    $notifications = $ionicPushApi->notifications->paginatedList();
+    <?
+    $response = $ionicPushApi->notifications->paginatedList();
     // If $notifications is not null, you can loop through the notifications.
-    if($notifications !== null){
-        foreach($notifications->data as $notification){
-    ?>
-            <li>    
-              <p> <b>Notification ID:</b> <?php echo $notification->uuid; ?> </p>
-              <p> <b>Title:</b> <?php echo $notification->config->notification->title; ?> </p>
-              <p> <b>Message:</b> <?php echo $notification->config->notification->message; ?> </p>
-              <p> <b>Created at:</b> <?php echo $notification->created; ?> </p>
-              <?php 
-                if(property_exists($notification->config, "send_to_all")) {
-              ?>
-              <p> <b>Send to all!</b> </p>
-              <?php
-                } else {
-              ?>
-              <p> <b>Send to tokens:</b> <pre> <?php var_dump($notification->config->tokens); ?> </pre> </p>
-              <?php
-                }
-              ?>
+    if($response->success) {
+        foreach($response->data as $notification) {
+            ?>
+            <li>
+                <p><b>Notification ID:</b> <?= $notification['uuid']; ?> </p>
+                <p><b>Title:</b> <?= $notification['config']['notification']['title']; ?> </p>
+                <p><b>Message:</b> <?= $notification['config']['notification']['message']; ?> </p>
+                <p><b>Created at:</b> <?= $notification['created']; ?> </p>
             </li>
-    <?php 
+            <?
         }
-    } else {
-    ?>
-            <li>Response is null!</li>
-    <?php
+    }
+    else {
+        ?>
+        <li>Error response: Code <?= $response->status ?></li>
+        <?
     }
     ?>
 </ul>
 
 <hr/>
 
-<h2>Retrieve notification by uuid:</h2>
+<h1>Retrieve notification by uuid:</h1>
 
 <ul>
-    <?php
-    $notification = $ionicPushApi->notifications->retrieve("e5aaf...");    
-    if($notification !== null){
-    ?>
-            <li>    
-              <p> <b>Notification ID:</b> <?php echo $notification->data->uuid; ?> </p>
-              <p> <b>Title:</b> <?php echo $notification->data->config->notification->title; ?> </p>
-              <p> <b>Message:</b> <?php echo $notification->data->config->notification->message; ?> </p>
-              <p> <b>Created at:</b> <?php echo $notification->data->created; ?> </p>
-              <?php 
-                if(property_exists($notification->data->config, "send_to_all")) {
-              ?>
-              <p> <b>Send to all!</b> </p>
-              <?php
-                } else {
-              ?>
-              <p> <b>Send to tokens:</b> <pre> <?php var_dump($notification->data->config->tokens); ?> </pre> </p>
-              <?php
-                }
-              ?>
-            </li>
-    <?php 
-    } else {
-    ?>
-            <li>Response is null!</li>
-    <?php
+    <?
+    $response = $ionicPushApi->notifications->retrieve("e5aaf...");
+    if($response->success) {
+        ?>
+        <li>
+            <p><b>Notification ID:</b> <?= $response->data['uuid']; ?> </p>
+            <p><b>Title:</b> <?= $response->data['config']['notification']['title']; ?> </p>
+            <p><b>Message:</b> <?= $response->data['config']['notification']['message']; ?> </p>
+            <p><b>Created at:</b> <?= $response->data['created']; ?> </p>
+        </li>
+        <?
+    }
+    else {
+        ?>
+        <li>Error response: Code <?= $response->status ?></li>
+        <?
     }
     ?>
 </ul>
