@@ -395,9 +395,3 @@ if($response->success) {
 1. Commit your changes (git commit -m 'Add some feature')
 1. Push to the branch (git push origin my-new-feature)
 1. Create new Pull Request
-
-
-## TODO:
-
-1. Methods replace() ~~and listMessages()~~ of **Notifications**.
-1. Methods ~~listAssociatedUsers(), associateUser() and dissociateUser()~~ of **DeviceTokens**.
