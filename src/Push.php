@@ -7,8 +7,9 @@ use Tomloprod\IonicApi\Api\DeviceTokens;
 use Tomloprod\IonicApi\Api\Messages;
 
 /**
- * Ionic API Push Library v 1.2.1
+ * Ionic API Push Library
  *
+ * @version 1.2.1
  * @package Tomloprod\IonicApi
  * @category  Library
  * @author  Tomás L.R (@tomloprod)
@@ -18,18 +19,21 @@ class Push {
 
     /**
      * Notifications class instance.
+     *
      * @var Notifications
      */
     public $notifications;
 
     /**
      * DeviceTokens class instance.
+     *
      * @var DeviceTokens
      */
     public $deviceTokens;
 
     /**
      * Messages class instance.
+     *
      * @var Messages
      */
     public $messages;

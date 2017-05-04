@@ -16,14 +16,14 @@ class Messages extends Request {
 
     private static $endPoints = [
         'retrieve' => '/push/messages/:message_id', // GET
-        'delete' => '/push/messages/:message_id' //DELETE
+        'delete' => '/push/messages/:message_id' // DELETE
     ];
 
     /**
      * Get Message details. Use this method to check the current status of a message or to lookup the error code for failures.
      *
      * @param string $messageId - Message ID
-     * @return array
+     * @return ApiResponse
      */
     public function retrieve($messageId) {
         return $this->sendRequest(
@@ -36,7 +36,7 @@ class Messages extends Request {
      * Deletes a message.
      *
      * @param string $messageId - Message ID
-     * @return array
+     * @return ApiResponse
      */
     public function delete($messageId) {
         return $this->sendRequest(

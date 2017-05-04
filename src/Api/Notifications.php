@@ -43,7 +43,7 @@ class Notifications extends Request {
      *
      * @param array $notificationData
      * @param array $payloadData - Custom extra data
-     * @param bool $silentNotification - Determines if the message should be delivered as a silent notification.
+     * @param boolean $silentNotification - Determines if the message should be delivered as a silent notification.
      * @param string $scheduledDateTime - Time to start delivery of the notification Y-m-d H:i:s format
      * @param string $sound - Filename of audio file to play when a notification is received.
      */
@@ -78,8 +78,8 @@ class Notifications extends Request {
             $this->requestData['scheduled'] = date("c", strtotime($scheduledDateTime));
         }
 	    
-	// sound
- 	$this->requestData['notification']['android']['sound'] = $sound;
+        // sound
+        $this->requestData['notification']['android']['sound'] = $sound;
     	$this->requestData['notification']['ios']['sound'] = $sound;
     }
 
@@ -87,34 +87,32 @@ class Notifications extends Request {
      * Paginated listing of Push Notifications.
      *
      * @param array $parameters
-     * @param boolean $decodeResponse - Indicates whether the JSON response will be converted to a PHP variable before return.
-     * @return array|object|null $response - An array when $decodeResponse is false, an object when $decodeResponse is true, and null when $decodeResponse is true and there is no data on response.
+     * @return ApiResponse
      */
-    public function paginatedList($parameters = [], $decodeResponse = true) {
+    public function paginatedList($parameters = []) {
         $response =  $this->sendRequest(
             self::METHOD_GET, 
             self::$endPoints['list'] . '?' . http_build_query($parameters), 
             $this->requestData
         );
         $this->resetRequestData();
-	return ($decodeResponse) ? self::decodeResponse($response) : $response;
+	    return $response;
     }
 
     /**
      * Get a Notification.
      *
      * @param string $notificationId - Notification id
-     * @param boolean $decodeResponse - Indicates whether the JSON response will be converted to a PHP variable before return.	 
-     * @return array|object|null $response - An array when $decodeResponse is false, an object when $decodeResponse is true, and null when $decodeResponse is true and there is no data on response.
+     * @return ApiResponse
      */
-    public function retrieve($notificationId, $decodeResponse = true) {
+    public function retrieve($notificationId) {
         $response = $this->sendRequest(
             self::METHOD_GET,
             str_replace(':notification_id', $notificationId, self::$endPoints['retrieve']),
             $this->requestData
         );
         $this->resetRequestData();
-        return ($decodeResponse) ? self::decodeResponse($response) : $response;
+        return $response;
     }
 
     // TODO: replace
@@ -123,36 +121,31 @@ class Notifications extends Request {
      * Deletes a notification.
      *
      * @param $notificationId
-     * @return boolean
+     * @return ApiResponse
      */
     public function delete($notificationId) {
-        $response = $this->sendRequest(
+        return $this->sendRequest(
             self::METHOD_DELETE,
             str_replace(':notification_id', $notificationId, self::$endPoints['delete'])
         );
-	return (empty($response)) ? true : false;
     }
 
     /**
      * Deletes all notifications
      *
-     * @return boolean $allDeleted - Indicate if all notifications have been deleted
+     * @return array - array of ApiResponse
      */
-    public function deleteAll(){
-        $allDeleted = true;
+    public function deleteAll() {
+        $responses = array();
         $notifications = self::paginatedList();
-        // If response is an object with data, we loop through each notification and delete.
-        if(is_object($notifications) && property_exists($notifications, "data")) {
-           foreach($notifications->data as $notification) {
-                // If delete response is not empty, the notification has not been deleted.
-                if(!empty(self::delete($notification->uuid))) {
-                    $allDeleted = false;
-                }
+        if($notifications['success']) {
+           foreach($notifications['response']['data'] as $notification) {
+               $responses[] = self::delete($notification->uuid);
            } 
         } else {
-           $allDeleted = false;
+           return array($notifications);
         }
-        return $allDeleted;
+        return $responses;
     }
     
     /**
@@ -160,10 +153,9 @@ class Notifications extends Request {
      *
      * @param string $notificationId - Notification id
      * @param array $parameters
-     * @param boolean $decodeResponse - Indicates whether the JSON response will be converted to a PHP variable before return.	 
-     * @return array|object|null $response - An array when $decodeResponse is false, an object when $decodeResponse is true, and null when $decodeResponse is true and there is no data on response.
+     * @return ApiResponse
      */
-    public function listMessages($notificationId, $parameters = [], $decodeResponse = true) {
+    public function listMessages($notificationId, $parameters = []) {
         $endPoint = str_replace(':notification_id', $notificationId, self::$endPoints['listMessages']);
         $response =  $this->sendRequest(
             self::METHOD_GET, 
@@ -171,14 +163,14 @@ class Notifications extends Request {
             $this->requestData
         );
         $this->resetRequestData();
-	return ($decodeResponse) ? self::decodeResponse($response) : $response;
+	    return $response;
     }
 
     /**
      * Send push notification for the indicated device tokens.
      *
      * @param array $deviceTokens
-     * @return array
+     * @return ApiResponse
      */
     public function sendNotification($deviceTokens) {
         $this->requestData['tokens'] = $deviceTokens;
@@ -189,7 +181,7 @@ class Notifications extends Request {
     /**
      * Send push notification for all registered devices.
      *
-     * @return array
+     * @return ApiResponse
      */
     public function sendNotificationToAll() {
         $this->requestData['send_to_all'] = true;
@@ -202,7 +194,7 @@ class Notifications extends Request {
      * Used by "sendNotification" and "sendNotificationToAll".
      *
      * @private
-     * @return array
+     * @return ApiResponse
      */
     private function create() {
         $response = $this->sendRequest(
@@ -227,7 +219,7 @@ class Notifications extends Request {
      * Validates a datetime (format YYYY-MM-DD HH:MM:SS)
      *
      * @param string $dateTime
-     * @return bool
+     * @return boolean
      */
     private function isDatetime($dateTime) {
         if (preg_match('/^(\d{4})-(\d\d?)-(\d\d?) (\d\d?):(\d\d?):(\d\d?)$/', $dateTime, $matches)) {
