@@ -3,7 +3,9 @@ use Tomloprod\IonicApi\Push;
 $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 ?>
 
-<h1>List all device tokens:</h1>
+<h1>IMPORTANT! - Examples <b>DEPRECATED</b> since 1.3.0</h1>
+
+<h2>List all device tokens:</h2>
 
 <ul>
     <?php
@@ -31,7 +33,7 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
     ?>
 </ul>
 
-<h1>Retrieve device token info by token:</h1>
+<h2>Retrieve device token info by token:</h2>
 
 <ul>
     <?php

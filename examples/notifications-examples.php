@@ -3,7 +3,9 @@ use Tomloprod\IonicApi\Push;
 $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 ?>
 
-<h1>List all notifications and get data:</h1>
+<h1>IMPORTANT! - Examples <b>DEPRECATED</b> since 1.3.0</h1>
+
+<h2>List all notifications and get data:</h2>
 
 <ul>
     <?php
@@ -41,7 +43,7 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 
 <hr/>
 
-<h1>Retrieve notification by uuid:</h1>
+<h2>Retrieve notification by uuid:</h2>
 
 <ul>
     <?php
