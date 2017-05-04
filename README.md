@@ -53,6 +53,9 @@ $response->data;
 
 // ERROR (array|null) For 4xx and 5xx responses, this object will exist. It may contain additional fields.
 $response->error; 
+
+// ERROR MESSAGE (string) Returns a quick summary about the error that occurred.
+$response->getErrorMessage()
 ```
 
 
@@ -398,4 +401,3 @@ if($response->success) {
 
 1. Methods replace() ~~and listMessages()~~ of **Notifications**.
 1. Methods ~~listAssociatedUsers(), associateUser() and dissociateUser()~~ of **DeviceTokens**.
-1. New examples for versions >= 1.3.0.
