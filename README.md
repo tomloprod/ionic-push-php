@@ -385,8 +385,6 @@ if($response->success) {
 }
 
 ```
-    
-<br>
 
 ## Contributing:
 1. Fork it
@@ -400,3 +398,4 @@ if($response->success) {
 
 1. Methods replace() ~~and listMessages()~~ of **Notifications**.
 1. Methods ~~listAssociatedUsers(), associateUser() and dissociateUser()~~ of **DeviceTokens**.
+1. New examples for versions >= 1.3.0.
