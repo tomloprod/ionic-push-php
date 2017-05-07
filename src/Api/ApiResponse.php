@@ -43,9 +43,9 @@ class ApiResponse {
      * ApiResponse constructor.
      *
      * @param $response
-     * @param number $httpStatusCode
+     * @param $httpStatusCode
      */
-    public function __construct($response, number $httpStatusCode) {
+    public function __construct($response, $httpStatusCode) {
         $this->status = $httpStatusCode;
         $response = json_decode($response, true);
 
