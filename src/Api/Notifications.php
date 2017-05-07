@@ -77,7 +77,7 @@ class Notifications extends Request {
             // Convert dateTime to RFC3339
             $this->requestData['scheduled'] = date("c", strtotime($scheduledDateTime));
         }
-	    
+
         // sound
         $this->requestData['notification']['android']['sound'] = $sound;
     	$this->requestData['notification']['ios']['sound'] = $sound;
@@ -87,12 +87,12 @@ class Notifications extends Request {
      * Paginated listing of Push Notifications.
      *
      * @param array $parameters
-     * @return ApiResponse
+     * @return object $response
      */
     public function paginatedList($parameters = []) {
         $response =  $this->sendRequest(
-            self::METHOD_GET, 
-            self::$endPoints['list'] . '?' . http_build_query($parameters), 
+            self::METHOD_GET,
+            self::$endPoints['list'] . '?' . http_build_query($parameters),
             $this->requestData
         );
         $this->resetRequestData();
@@ -103,7 +103,7 @@ class Notifications extends Request {
      * Get a Notification.
      *
      * @param string $notificationId - Notification id
-     * @return ApiResponse
+     * @return object $response
      */
     public function retrieve($notificationId) {
         $response = $this->sendRequest(
@@ -121,7 +121,7 @@ class Notifications extends Request {
      * Deletes a notification.
      *
      * @param $notificationId
-     * @return ApiResponse
+     * @return object $response
      */
     public function delete($notificationId) {
         return $this->sendRequest(
@@ -133,7 +133,7 @@ class Notifications extends Request {
     /**
      * Deletes all notifications
      *
-     * @return array - array of ApiResponse
+     * @return array - array of responses
      */
     public function deleteAll() {
         $responses = array();
@@ -141,25 +141,25 @@ class Notifications extends Request {
         if($notifications['success']) {
            foreach($notifications['response']['data'] as $notification) {
                $responses[] = self::delete($notification->uuid);
-           } 
+           }
         } else {
            return array($notifications);
         }
         return $responses;
     }
-    
+
     /**
      * List messages of the indicated notification.
      *
      * @param string $notificationId - Notification id
      * @param array $parameters
-     * @return ApiResponse
+     * @return object $response
      */
     public function listMessages($notificationId, $parameters = []) {
         $endPoint = str_replace(':notification_id', $notificationId, self::$endPoints['listMessages']);
         $response =  $this->sendRequest(
-            self::METHOD_GET, 
-            $endPoint . '?' . http_build_query($parameters), 
+            self::METHOD_GET,
+            $endPoint . '?' . http_build_query($parameters),
             $this->requestData
         );
         $this->resetRequestData();
@@ -170,7 +170,7 @@ class Notifications extends Request {
      * Send push notification for the indicated device tokens.
      *
      * @param array $deviceTokens
-     * @return ApiResponse
+     * @return object $response
      */
     public function sendNotification($deviceTokens) {
         $this->requestData['tokens'] = $deviceTokens;
@@ -181,7 +181,7 @@ class Notifications extends Request {
     /**
      * Send push notification for all registered devices.
      *
-     * @return ApiResponse
+     * @return object $response
      */
     public function sendNotificationToAll() {
         $this->requestData['send_to_all'] = true;
@@ -194,12 +194,12 @@ class Notifications extends Request {
      * Used by "sendNotification" and "sendNotificationToAll".
      *
      * @private
-     * @return ApiResponse
+     * @return object $response
      */
     private function create() {
         $response = $this->sendRequest(
-            self::METHOD_POST, 
-            self::$endPoints['create'], 
+            self::METHOD_POST,
+            self::$endPoints['create'],
             $this->requestData
         );
         $this->resetRequestData();

@@ -23,7 +23,7 @@ class Messages extends Request {
      * Get Message details. Use this method to check the current status of a message or to lookup the error code for failures.
      *
      * @param string $messageId - Message ID
-     * @return ApiResponse
+     * @return object $response
      */
     public function retrieve($messageId) {
         return $this->sendRequest(
@@ -36,7 +36,7 @@ class Messages extends Request {
      * Deletes a message.
      *
      * @param string $messageId - Message ID
-     * @return ApiResponse
+     * @return object $response
      */
     public function delete($messageId) {
         return $this->sendRequest(

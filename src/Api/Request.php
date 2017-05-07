@@ -2,6 +2,10 @@
 
 namespace Tomloprod\IonicApi\Api;
 
+use Tomloprod\IonicApi\Exception\AuthException,
+    Tomloprod\IonicApi\Exception\NotFoundException,
+    Tomloprod\IonicApi\Exception\BadRequestException;
+
 /**
  * Class Request
  *
@@ -97,7 +101,23 @@ class Request {
 
         curl_close($curlHandler);
 
-        return new ApiResponse($response, $httpStatusCode);
+        $response = json_decode($response);
+
+        // Exceptions
+        switch ($httpStatusCode) {
+          case 400:
+              throw new BadRequestException($response->error->type, $response->error->message, $httpStatusCode);
+          break;
+          case 401:
+              throw new AuthException($response->error->type, $response->error->message, $httpStatusCode);
+          break;
+          case 404:
+              throw new NotFoundException($response->error->type, $response->error->message, $httpStatusCode);
+          break;
+        }
+
+        // If there is no exception, return response.
+        return $response;
     }
 
 }
