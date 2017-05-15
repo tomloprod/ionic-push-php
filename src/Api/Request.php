@@ -106,19 +106,21 @@ class Request {
         $response = json_decode($response);
 
         // Exceptions
-        switch ($httpStatusCode) {
-          case 400:
-              throw new BadRequestException($response->error->type, $response->error->message, $httpStatusCode);
-          break;
-          case 401:
-              throw new AuthException($response->error->type, $response->error->message, $httpStatusCode);
-          break;
-          case 404:
-              throw new NotFoundException($response->error->type, $response->error->message, $httpStatusCode);
-          break;
+        if(!empty($response->error)) {
+            switch ($httpStatusCode) {
+                case 401:
+                    throw new AuthException($response->error->type, $response->error->message, $httpStatusCode);
+                    break;
+                case 404:
+                    throw new NotFoundException($response->error->type, $response->error->message, $httpStatusCode);
+                    break;
+                default:
+                    throw new BadRequestException($response->error->type, $response->error->message, $httpStatusCode);
+                    break;
+            }
         }
 
-        // If there is no exception, return response.
+        // Return response.
         return $response;
     }
 
