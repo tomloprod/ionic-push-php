@@ -115,7 +115,7 @@ try {
   $userId = "a99ee...";
   $ionicPushApi->deviceTokens->associateUser($deviceToken, $userId);
 
-  // Here, the user has been associated.
+  // The user has been associated.
 
 } catch(AuthException $e) { // Auth errors
   echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
@@ -135,7 +135,7 @@ try {
   $userId = "a99ee...";
   $ionicPushApi->deviceTokens->dissociateUser($deviceToken, $userId);
 
-  // Here, the user has been dissociated.
+  // The user has been dissociated.
 
 } catch(AuthException $e) { // Auth errors
   echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
@@ -195,7 +195,7 @@ try {
   $isValid = true; // Determines whether the device token is valid (boolean)
   $ionicPushApi->deviceTokens->update($desiredDeviceToken, ['valid' => $isValid]);
 
-  // Here, the device token has been updated.
+  // The device token has been updated.
 
 } catch(AuthException $e) { // Auth errors
   echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
@@ -213,7 +213,7 @@ try {
 
   $ionicPushApi->deviceTokens->delete($desiredDeviceToken);
 
-  // Here, the device token has been deleted.
+  // The device token has been deleted.
 
 } catch(AuthException $e) { // Auth errors
   echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
@@ -249,7 +249,7 @@ try {
 try {
   $ionicPushApi->messages->delete($desiredMessageId);
 
-  // Here, the message has been deleted.
+  // The message has been deleted.
 
 } catch(AuthException $e) { // Auth errors
   echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
@@ -316,7 +316,7 @@ try {
 try {
   $ionicPushApi->notifications->delete($desiredNotificationId);
 
-  // Here, notification has been deleted.
+  // Notification has been deleted.
 
 } catch(AuthException $e) { // Auth errors
   echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
@@ -334,7 +334,7 @@ try {
 ?
   $responses = $ionicPushApi->notifications->deleteAll();
 
-  // Here, notifications have been deleted.
+  // Notifications have been deleted.
 
 } catch(AuthException $e) { // Auth errors
   echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
@@ -468,10 +468,3 @@ try {
 1. Commit your changes (git commit -m 'Add some feature')
 1. Push to the branch (git push origin my-new-feature)
 1. Create new Pull Request
-
-
-## TODO:
-
-1. Methods replace() ~~and listMessages()~~ of **Notifications**.
-1. Methods ~~listAssociatedUsers(), associateUser() and dissociateUser()~~ of **DeviceTokens**.
-1. New examples for versions >= 1.3.0.

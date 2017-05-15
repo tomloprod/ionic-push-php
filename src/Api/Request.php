@@ -4,7 +4,8 @@ namespace Tomloprod\IonicApi\Api;
 
 use Tomloprod\IonicApi\Exception\AuthException,
     Tomloprod\IonicApi\Exception\NotFoundException,
-    Tomloprod\IonicApi\Exception\BadRequestException;
+    Tomloprod\IonicApi\Exception\BadRequestException,
+    Tomloprod\IonicApi\Exception\RequestException;
 
 /**
  * Class Request
@@ -53,7 +54,8 @@ class Request {
      * @param string $method
      * @param string $endPoint
      * @param string $data
-     * @return ApiResponse
+     * @throws RequestException
+     * @return object
      */
     public function sendRequest($method, $endPoint, $data = "") {
         $jsonData = json_encode($data);
