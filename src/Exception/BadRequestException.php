@@ -13,8 +13,17 @@ use Tomloprod\IonicApi\Exception\RequestException;
  */
 class BadRequestException extends RequestException{
 
-   public function __construct($type, $message, $code = 0, $e = null) {
-       parent::__construct($type, $message, $code, $e);
-   }
+    /**
+     * BadRequestException constructor.
+     *
+     * @param string $type
+     * @param int $message
+     * @param string $link
+     * @param int $code
+     * @param null $e
+     */
+    public function __construct($type, $message, $link = "", $code = 0, $e = null) {
+        parent::__construct($type, $message, $link, $code, $e);
+    }
 
 }

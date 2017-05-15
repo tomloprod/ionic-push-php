@@ -109,13 +109,13 @@ class Request {
         if(!empty($response->error)) {
             switch ($httpStatusCode) {
                 case 401:
-                    throw new AuthException($response->error->type, $response->error->message, $httpStatusCode);
+                    throw new AuthException($response->error->type, $response->error->message, $response->error->link, $httpStatusCode);
                     break;
                 case 404:
-                    throw new NotFoundException($response->error->type, $response->error->message, $httpStatusCode);
+                    throw new NotFoundException($response->error->type, $response->error->message, $response->error->link, $httpStatusCode);
                     break;
                 default:
-                    throw new BadRequestException($response->error->type, $response->error->message, $httpStatusCode);
+                    throw new BadRequestException($response->error->type, $response->error->message, $response->error->link, $httpStatusCode);
                     break;
             }
         }
