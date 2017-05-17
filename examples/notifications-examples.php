@@ -1,4 +1,5 @@
 <?
+use Tomloprod\IonicApi\Exception\RequestException;
 use Tomloprod\IonicApi\Push;
 
 $ionicProfile = "yourIonicProfile";
@@ -7,14 +8,17 @@ $ionicAPIToken = "youtIonicApiToken";
 $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 ?>
 
-
 <h1>List all notifications and get data:</h1>
 
 <ul>
     <?
-    $response = $ionicPushApi->notifications->paginatedList();
-    // If $notifications is not null, you can loop through the notifications.
-    if($response->success) {
+    try {
+
+        $response = $ionicPushApi->notifications->paginatedList([
+            'page_size' => 10,
+            'page' => 1
+        ]);
+
         foreach($response->data as $notification) {
             ?>
             <li>
@@ -25,11 +29,12 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
             </li>
             <?
         }
-    }
-    else {
-        ?>
-        <li>Error! Code: <?= $response->status ?> | Message: <?= $response->getErrorMessage()?></li>
-        <?
+
+    } catch(RequestException $e) {
+        // Three ways to do the same thing:
+        ?><li>Error! Code: <?= $e->getCode() ?> | Message: <?= $e->getMessage()?> | Link: <?= $e->getLink() ?></li><?
+        ?><li><?=$e->prettify()?></li><?
+        ?><li><?=$e?></li><?
     }
     ?>
 </ul>
@@ -40,8 +45,10 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 
 <ul>
     <?
-    $response = $ionicPushApi->notifications->retrieve("e5aaf...");
-    if($response->success) {
+    try {
+
+        $response = $ionicPushApi->notifications->retrieve("e5aaf...");
+
         ?>
         <li>
             <p><b>Notification ID:</b> <?= $response->data['uuid']; ?> </p>
@@ -50,11 +57,12 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
             <p><b>Created at:</b> <?= $response->data['created']; ?> </p>
         </li>
         <?
-    }
-    else {
-        ?>
-        <li>Error! Code: <?= $response->status ?> | Message: <?= $response->getErrorMessage()?></li>
-        <?
+
+    } catch(RequestException $e) {
+        // Three ways to do the same thing:
+        ?><li>Error! Code: <?= $e->getCode() ?> | Message: <?= $e->getMessage()?> | Link: <?= $e->getLink() ?></li><?
+        ?><li><?=$e->prettify()?></li><?
+        ?><li><?=$e?></li><?
     }
     ?>
 </ul>

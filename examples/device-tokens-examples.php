@@ -1,4 +1,5 @@
 <?
+use Tomloprod\IonicApi\Exception\RequestException;
 use Tomloprod\IonicApi\Push;
 
 $ionicProfile = "yourIonicProfile";
@@ -11,10 +12,17 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 
 <ul>
     <?
-    $response = $ionicPushApi->deviceTokens->paginatedList();
-    // If $deviceTokens is not null, you can loop through the device tokens.
-    if($response->success) {
-        foreach($response->data as $deviceToken) {
+    $desiredUserId = "e5axv...";
+
+    try {
+        $response = $ionicPushApi->deviceTokens->paginatedList([
+            'show_invalid' => 1,
+            'user_id' => $desiredUserId,
+            'page_size' => 4,
+            'page' => 1
+        ]);
+
+        foreach($response->data as $deviceToken){
             ?>
             <li>
                 <p><b>Device token ID:</b> <?= $deviceToken['id']; ?> </p>
@@ -27,21 +35,23 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
             </li>
             <?
         }
-    }
-    else {
-        ?>
-        <li>Error! Code: <?= $response->status ?> | Message: <?= $response->getErrorMessage()?></li>
-        <?
+    } catch(RequestException $e) {
+        // Three ways to do the same thing:
+        ?><li>Error! Code: <?= $e->getCode() ?> | Message: <?= $e->getMessage()?> | Link: <?= $e->getLink() ?></li><?
+        ?><li><?=$e->prettify()?></li><?
+        ?><li><?=$e?></li><?
     }
     ?>
 </ul>
+
+<hr/>
 
 <h1>Retrieve device token info by token:</h1>
 
 <ul>
     <?
-    $response = $ionicPushApi->deviceTokens->retrieve("4c4ea40...");
-    if($response->success) {
+    try {
+        $response = $ionicPushApi->deviceTokens->retrieve("4c4ea40...");
         ?>
         <li>
             <p><b>Device token ID:</b> <?= $response->data['id']; ?> </p>
@@ -53,11 +63,11 @@ $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
             <p><b>App ID:</b> <?= $response->data['app_id']; ?> </p>
         </li>
         <?
-    }
-    else {
-        ?>
-        <li>Error! Code: <?= $response->status ?> | Message: <?= $response->getErrorMessage()?></li>
-        <?
+    } catch(RequestException $e) {
+        // Three ways to do the same thing:
+        ?><li>Error! Code: <?= $e->getCode() ?> | Message: <?= $e->getMessage()?> | Link: <?= $e->getLink() ?></li><?
+        ?><li><?=$e->prettify()?></li><?
+        ?><li><?=$e?></li><?
     }
     ?>
 </ul>
