@@ -15,7 +15,6 @@ Ionic official documentation: [Ionic HTTP API - Push](https://docs.ionic.io/api/
 
 ## Configuration:
 
-
 First, make sure you have your `$ionicAPIToken` and your `$ionicProfile`:
 
 - (string) **$ionicAPIToken:** The API token that you must create in *Settings › API Keys* in the [Dashboard](https://apps.ionic.io).
@@ -28,11 +27,18 @@ If you don't know how to configure your ionic app, you can take a look here: [Se
 
 ## Exceptions
 
-This library could throw any of the follow exceptions:
+This library could throw:
 
-- AuthException
-- NotFoundException
-- BadRequestException
+- RequestException
+
+````php
+echo $e;
+echo $e->prettify();
+echo $e->getCode();
+echo $e->getMessage();
+echo $e->getType();
+echo $e->getLink();
+````
 
 ## How to use:
 
@@ -40,9 +46,7 @@ First, instance an object as follow:
 
 ```php
 use Tomloprod\IonicApi\Push,
-    Tomloprod\IonicApi\Exception\AuthException,
-    Tomloprod\IonicApi\Exception\NotFoundException,
-    Tomloprod\IonicApi\Exception\BadRequestException;
+    Tomloprod\IonicApi\Exception\RequestException;
 
 $ionicPushApi = new Push($ionicProfile, $ionicAPIToken);
 ```
@@ -74,12 +78,8 @@ try {
       print_r($deviceToken);
   }
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -97,12 +97,8 @@ try {
 
   // Do what you want with $response->data
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -117,12 +113,8 @@ try {
 
   // The user has been associated.
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -137,12 +129,8 @@ try {
 
   // The user has been dissociated.
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -160,12 +148,8 @@ try {
 
   // Do what you want with $response->data
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -178,12 +162,8 @@ try {
 
   // Do what you want with $response->data
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -197,12 +177,8 @@ try {
 
   // The device token has been updated.
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -215,12 +191,8 @@ try {
 
   // The device token has been deleted.
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -234,12 +206,8 @@ try {
 
   // Do what you want with $response->data
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -251,12 +219,8 @@ try {
 
   // The message has been deleted.
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -283,12 +247,8 @@ try {
 
   // Do what you want with $response->data
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -301,12 +261,8 @@ try {
 
   // Do what you want with $response->data
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -318,12 +274,8 @@ try {
 
   // Notification has been deleted.
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -336,12 +288,8 @@ try {
 
   // Notifications have been deleted.
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
@@ -359,12 +307,8 @@ try {
 
   // Do what you want with $response->data
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
  ```
 
@@ -453,12 +397,8 @@ try {
 
   // Do what you want with $response->data
 
-} catch(AuthException $e) { // Auth errors
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(NotFoundException $e){ // Not found exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
-} catch(BadRequestException $e) { // Bad request exceptions
-  echo $e->getCode(). " ". $e->getType(). " : " .$e->getMessage();
+} catch(RequestException $e) {
+  echo $e;
 }
 ```
 
