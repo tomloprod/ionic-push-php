@@ -2,10 +2,7 @@
 
 namespace Tomloprod\IonicApi\Api;
 
-use Tomloprod\IonicApi\Exception\AuthException,
-    Tomloprod\IonicApi\Exception\NotFoundException,
-    Tomloprod\IonicApi\Exception\BadRequestException,
-    Tomloprod\IonicApi\Exception\RequestException;
+use Tomloprod\IonicApi\Exception\RequestException;
 
 /**
  * Class Request
@@ -106,22 +103,139 @@ class Request {
         $response = json_decode($response);
 
         // Exceptions
-        if(!empty($response->error)) {
-            switch ($httpStatusCode) {
-                case 401:
-                    throw new AuthException($response->error->type, $response->error->message, $response->error->link, $httpStatusCode);
-                    break;
-                case 404:
-                    throw new NotFoundException($response->error->type, $response->error->message, $response->error->link, $httpStatusCode);
-                    break;
-                default:
-                    throw new BadRequestException($response->error->type, $response->error->message, $response->error->link, $httpStatusCode);
-                    break;
+        if($this->isInvalidResponse($httpStatusCode)) {
+            throw new RequestException("Invalid Response", "The response from ionic is invalid", "", $httpStatusCode);
+        } else if($this->isClientErrorResponse($httpStatusCode) || $this->isServerErrorResponse($httpStatusCode)) {
+            if(empty($response) || empty($response->error)) {
+                throw new RequestException($this->isServerErrorResponse($httpStatusCode) ? "Server Error" : "Client Error", RequestException::$statusTexts[$httpStatusCode], "", $httpStatusCode);
+            } else {
+                throw new RequestException($response->error->type, $response->error->message, $response->error->link, $httpStatusCode);
             }
         }
 
         // Return response.
         return $response;
     }
+
+    /**
+     * Is response valid?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    /*private function isValidResponse($statusCode) {
+        return !$this->isInvalidResponse($statusCode);
+    }*/
+
+    /**
+     * Is response invalid?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    private function isInvalidResponse($statusCode) {
+        return $statusCode < 100 || $statusCode >= 600;
+    }
+
+    /**
+     * Is there a client error?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    private function isClientErrorResponse($statusCode) {
+        return $statusCode >= 400 && $statusCode < 500;
+    }
+
+    /**
+     * Was there a server side error?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    private function isServerErrorResponse($statusCode) {
+        return $statusCode >= 500 && $statusCode < 600;
+    }
+
+    /**
+     * Is response informative?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    /*private function isInformationalResponse($statusCode) {
+        return $statusCode >= 100 && $statusCode < 200;
+    }*/
+
+    /**
+     * Is response successful?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    /*private function isSuccessfulResponse($statusCode) {
+        return $statusCode >= 200 && $statusCode < 300;
+    }*/
+
+    /**
+     * Is the response a redirect?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    /*private function isRedirectionResponse($statusCode) {
+        return $statusCode >= 300 && $statusCode < 400;
+    }*/
+
+    /**
+     * Is the response a Auth error?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    /*private function isAuthErrorResponse($statusCode) {
+        return 401 === $statusCode;
+    }*/
+
+    /**
+     * Is the response forbidden?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    /*private function isForbiddenResponse($statusCode) {
+        return 403 === $statusCode;
+    }*/
+
+    /**
+     * Is the response a not found error?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    /*private function isNotFoundResponse($statusCode) {
+        return 404 === $statusCode;
+    }*/
+
+    /**
+     * Is the response empty?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    /*private function isEmptyResponse($statusCode) {
+        return in_array($statusCode, array(204, 304));
+    }*/
 
 }
