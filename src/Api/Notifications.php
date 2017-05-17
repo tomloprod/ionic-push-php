@@ -41,6 +41,7 @@ class Notifications extends Request {
     /**
      * Set notification config.
      *
+     * @link https://docs.ionic.io/api/endpoints/push.html#post-notifications Ionic documentation
      * @param array $notificationData
      * @param array $payloadData - Custom extra data
      * @param boolean $silentNotification - Determines if the message should be delivered as a silent notification.
@@ -86,6 +87,7 @@ class Notifications extends Request {
     /**
      * Paginated listing of Push Notifications.
      *
+     * @link https://docs.ionic.io/api/endpoints/push.html#get-notifications Ionic documentation
      * @param array $parameters
      * @return object $response
      */
@@ -102,6 +104,7 @@ class Notifications extends Request {
     /**
      * Get a Notification.
      *
+     * @link https://docs.ionic.io/api/endpoints/push.html#get-notifications-notification_id Ionic documentation
      * @param string $notificationId - Notification id
      * @return object $response
      */
@@ -120,6 +123,7 @@ class Notifications extends Request {
     /**
      * Deletes a notification.
      *
+     * @link https://docs.ionic.io/api/endpoints/push.html#delete-notifications-notification_id Ionic documentation
      * @param $notificationId
      * @return object $response
      */
@@ -151,6 +155,7 @@ class Notifications extends Request {
     /**
      * List messages of the indicated notification.
      *
+     * @link https://docs.ionic.io/api/endpoints/push.html#get-notifications-notification_id-messages Ionic documentation
      * @param string $notificationId - Notification id
      * @param array $parameters
      * @return object $response
@@ -169,6 +174,7 @@ class Notifications extends Request {
     /**
      * Send push notification for the indicated device tokens.
      *
+     * @link https://docs.ionic.io/api/endpoints/push.html#post-notifications Ionic documentation
      * @param array $deviceTokens
      * @return object $response
      */
@@ -181,6 +187,7 @@ class Notifications extends Request {
     /**
      * Send push notification for all registered devices.
      *
+     * @link https://docs.ionic.io/api/endpoints/push.html#post-notifications Ionic documentation
      * @return object $response
      */
     public function sendNotificationToAll() {

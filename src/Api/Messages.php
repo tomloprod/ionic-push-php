@@ -22,6 +22,7 @@ class Messages extends Request {
     /**
      * Get Message details. Use this method to check the current status of a message or to lookup the error code for failures.
      *
+     * @link https://docs.ionic.io/api/endpoints/push.html#get-messages-message_id Ionic documentation
      * @param string $messageId - Message ID
      * @return object $response
      */
@@ -35,6 +36,7 @@ class Messages extends Request {
     /**
      * Deletes a message.
      *
+     * @link https://docs.ionic.io/api/endpoints/push.html#delete-messages-message_id Ionic documentation
      * @param string $messageId - Message ID
      * @return object $response
      */
