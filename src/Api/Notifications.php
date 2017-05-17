@@ -118,7 +118,22 @@ class Notifications extends Request {
         return $response;
     }
 
-    // TODO: replace
+    /**
+     * Replace a notification.
+     * Needs previous setConfig();
+     *
+     * @param string $notificationId - Notification id
+     * @return object
+     */
+    public function replace($notificationId) {
+        $response = $this->sendRequest(
+            self::METHOD_PUT,
+            str_replace(':notification_id', $notificationId, self::$endPoints['replace']),
+            $this->requestData
+        );
+        $this->resetRequestData();
+        return $response;
+    }
 
     /**
      * Deletes a notification.
@@ -173,6 +188,7 @@ class Notifications extends Request {
 
     /**
      * Send push notification for the indicated device tokens.
+     * Needs previous setConfig();
      *
      * @link https://docs.ionic.io/api/endpoints/push.html#post-notifications Ionic documentation
      * @param array $deviceTokens
@@ -186,6 +202,7 @@ class Notifications extends Request {
 
     /**
      * Send push notification for all registered devices.
+     * Needs previous setConfig();
      *
      * @link https://docs.ionic.io/api/endpoints/push.html#post-notifications Ionic documentation
      * @return object $response
