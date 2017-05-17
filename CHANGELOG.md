@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.5.1 (2017-05-17)
+- Added replace() method to Notifications class.
+
 ### 1.5.0 (2017-05-17)
 - Improved and simplified exceptions.
 
