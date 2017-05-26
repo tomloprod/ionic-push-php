@@ -12,8 +12,8 @@ namespace Tomloprod\IonicApi\Api;
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
-class Messages extends Request {
-
+class Messages extends Request
+{
     private static $endPoints = [
         'retrieve' => '/push/messages/:message_id', // GET
         'delete' => '/push/messages/:message_id' // DELETE
@@ -26,7 +26,8 @@ class Messages extends Request {
      * @param string $messageId - Message ID
      * @return object $response
      */
-    public function retrieve($messageId) {
+    public function retrieve($messageId)
+    {
         return $this->sendRequest(
             self::METHOD_GET,
             str_replace(':message_id', $messageId, self::$endPoints['retrieve'])
@@ -40,11 +41,11 @@ class Messages extends Request {
      * @param string $messageId - Message ID
      * @return object $response
      */
-    public function delete($messageId) {
+    public function delete($messageId)
+    {
         return $this->sendRequest(
             self::METHOD_DELETE,
             str_replace(':message_id', $messageId, self::$endPoints['delete'])
         );
     }
-
 }

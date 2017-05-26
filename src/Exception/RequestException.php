@@ -9,7 +9,8 @@ namespace Tomloprod\IonicApi\Exception;
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
-class RequestException extends \Exception {
+class RequestException extends \Exception
+{
 
     /**
      * Status codes translation table
@@ -106,7 +107,8 @@ class RequestException extends \Exception {
      * @param int $code
      * @param null $e
      */
-    public function __construct($type, $message, $link = "", $code = 0, $e = null) {
+    public function __construct($type, $message, $link = "", $code = 0, $e = null)
+    {
         //$message = $type. " : " . $message;
         $this->type = $type;
         $this->link = $link;
@@ -118,7 +120,8 @@ class RequestException extends \Exception {
      *
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
@@ -127,7 +130,8 @@ class RequestException extends \Exception {
      *
      * @return string
      */
-    public function getLink() {
+    public function getLink()
+    {
         return $this->link;
     }
 
@@ -136,7 +140,8 @@ class RequestException extends \Exception {
      *
      * @return string
      */
-    public function prettify() {
+    public function prettify()
+    {
         $str = "ERROR " . $this->getCode() . " (" . self::$statusTexts[$this->getCode()] . "): ";
         $str .= $this->getMessage();
         /*if(!empty($this->link)) {
@@ -150,8 +155,8 @@ class RequestException extends \Exception {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->prettify();
     }
-
 }

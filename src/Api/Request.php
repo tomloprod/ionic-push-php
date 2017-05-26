@@ -11,8 +11,8 @@ use Tomloprod\IonicApi\Exception\RequestException;
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
-class Request {
-
+class Request
+{
     // Available HTTP methods
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
@@ -38,7 +38,8 @@ class Request {
      * @param string $ionicProfile
      * @param string $ionicAPIToken
      */
-    public function __construct($ionicProfile, $ionicAPIToken) {
+    public function __construct($ionicProfile, $ionicAPIToken)
+    {
         $this->ionicProfile = $ionicProfile;
         $this->ionicAPIToken = $ionicAPIToken;
     }
@@ -54,20 +55,17 @@ class Request {
      * @throws RequestException
      * @return object
      */
-    public function sendRequest($method, $endPoint, $data = "") {
-        $jsonData = json_encode($data);
-
-        $endPoint = self::$ionicBaseURL . $endPoint;
-
-        $curlHandler = curl_init();
-
-        $authorization = sprintf('Bearer %s', $this->ionicAPIToken);
+    public function sendRequest($method, $endPoint, $data = '')
+    {
+        $data = json_encode($data);
 
         $headers = [
-            'Authorization:' . $authorization,
+            'Authorization: Bearer ' . $this->ionicAPIToken,
             'Content-Type: application/json',
-            'Content-Length: ' . strlen($jsonData)
+            'Content-Length: ' . strlen($data),
         ];
+
+        $curlHandler = curl_init();
 
         curl_setopt($curlHandler, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
         curl_setopt($curlHandler, CURLOPT_TIMEOUT, $this->timeout);
@@ -76,10 +74,11 @@ class Request {
         curl_setopt($curlHandler, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curlHandler, CURLOPT_HEADER, false);
 
-        switch($method) {
+        switch ($method) {
             case self::METHOD_POST:
                 curl_setopt($curlHandler, CURLOPT_POST, true);
                 break;
+
             case self::METHOD_GET:
             case self::METHOD_DELETE:
             case self::METHOD_PATCH:
@@ -87,30 +86,23 @@ class Request {
                 break;
         }
 
-        if(!empty($jsonData)) {
-            curl_setopt($curlHandler, CURLOPT_POSTFIELDS, $jsonData);
+        if (!empty($data)) {
+            curl_setopt($curlHandler, CURLOPT_POSTFIELDS, $data);
         }
 
         curl_setopt($curlHandler, CURLINFO_HEADER_OUT, true);
-        curl_setopt($curlHandler, CURLOPT_URL, $endPoint);
+        curl_setopt($curlHandler, CURLOPT_URL, self::$ionicBaseURL . $endPoint);
 
         $response = curl_exec($curlHandler);
 
-        $httpStatusCode = curl_getinfo($curlHandler, CURLINFO_HTTP_CODE);
+        $statusCode = curl_getinfo($curlHandler, CURLINFO_HTTP_CODE);
 
         curl_close($curlHandler);
 
         $response = json_decode($response);
 
-        // Exceptions
-        if($this->isInvalidResponse($httpStatusCode)) {
-            throw new RequestException("Invalid Response", "The response from ionic is invalid", "", $httpStatusCode);
-        } else if($this->isClientErrorResponse($httpStatusCode) || $this->isServerErrorResponse($httpStatusCode)) {
-            if(empty($response) || empty($response->error)) {
-                throw new RequestException($this->isServerErrorResponse($httpStatusCode) ? "Server Error" : "Client Error", RequestException::$statusTexts[$httpStatusCode], "", $httpStatusCode);
-            } else {
-                throw new RequestException($response->error->type, $response->error->message, $response->error->link, $httpStatusCode);
-            }
+        if (!$this->isSuccessResponse($statusCode)) {
+            $this->throwRequestException($statusCode, $response);
         }
 
         // Return response.
@@ -125,8 +117,20 @@ class Request {
      * @return bool
      */
     /*private function isValidResponse($statusCode) {
-        return !$this->isInvalidResponse($statusCode);
+    return !$this->isInvalidResponse($statusCode);
     }*/
+
+    /**
+     * Is response valid?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    private function isSuccessResponse($statusCode)
+    {
+        return $statusCode >= 200 && $statusCode < 300;
+    }
 
     /**
      * Is response invalid?
@@ -135,7 +139,8 @@ class Request {
      * @param number $statusCode
      * @return bool
      */
-    private function isInvalidResponse($statusCode) {
+    private function isInvalidResponse($statusCode)
+    {
         return $statusCode < 100 || $statusCode >= 600;
     }
 
@@ -146,7 +151,8 @@ class Request {
      * @param number $statusCode
      * @return bool
      */
-    private function isClientErrorResponse($statusCode) {
+    private function isClientErrorResponse($statusCode)
+    {
         return $statusCode >= 400 && $statusCode < 500;
     }
 
@@ -157,8 +163,60 @@ class Request {
      * @param number $statusCode
      * @return bool
      */
-    private function isServerErrorResponse($statusCode) {
+    private function isServerErrorResponse($statusCode)
+    {
         return $statusCode >= 500 && $statusCode < 600;
+    }
+
+    /**
+     * Throw the RequestException error with error detail
+     *
+     * @private
+     * @param number $statusCode
+     * @param mixed $response
+     *
+     * @throws RequestException
+     *
+     * @return void
+     */
+    private function throwRequestException($statusCode, $response)
+    {
+        if ($response && isset($response->error)) {
+            $type = $response->error->type;
+            $message = $this->getResponseErrorMessage($response->error);
+            $link = $response->error->link;
+        } elseif ($this->isServerErrorResponse($statusCode)) {
+            $type = 'Server Error';
+            $message = RequestException::$statusTexts[$statusCode];
+            $link = '';
+        } else {
+            $type = 'Client Error';
+            $message = RequestException::$statusTexts[$statusCode];
+            $link = '';
+        }
+
+        throw new RequestException($type, $message, $link, $statusCode);
+    }
+
+    /**
+     * Generate a full message from response error request
+     *
+     * @private
+     * @param object $error
+     *
+     * @return string
+     */
+    private function getResponseErrorMessage($error)
+    {
+        $message = $error->message;
+
+        if (isset($error->details) && is_array($error->details)) {
+            foreach ($error->details as $detail) {
+                $message .= ' ['.$detail->error_type.'] '.implode(' ', $detail->errors);
+            }
+        }
+
+        return $message;
     }
 
     /**
@@ -169,7 +227,7 @@ class Request {
      * @return bool
      */
     /*private function isInformationalResponse($statusCode) {
-        return $statusCode >= 100 && $statusCode < 200;
+    return $statusCode >= 100 && $statusCode < 200;
     }*/
 
     /**
@@ -180,7 +238,7 @@ class Request {
      * @return bool
      */
     /*private function isSuccessfulResponse($statusCode) {
-        return $statusCode >= 200 && $statusCode < 300;
+    return $statusCode >= 200 && $statusCode < 300;
     }*/
 
     /**
@@ -191,7 +249,7 @@ class Request {
      * @return bool
      */
     /*private function isRedirectionResponse($statusCode) {
-        return $statusCode >= 300 && $statusCode < 400;
+    return $statusCode >= 300 && $statusCode < 400;
     }*/
 
     /**
@@ -202,7 +260,7 @@ class Request {
      * @return bool
      */
     /*private function isAuthErrorResponse($statusCode) {
-        return 401 === $statusCode;
+    return 401 === $statusCode;
     }*/
 
     /**
@@ -213,7 +271,7 @@ class Request {
      * @return bool
      */
     /*private function isForbiddenResponse($statusCode) {
-        return 403 === $statusCode;
+    return 403 === $statusCode;
     }*/
 
     /**
@@ -224,7 +282,7 @@ class Request {
      * @return bool
      */
     /*private function isNotFoundResponse($statusCode) {
-        return 404 === $statusCode;
+    return 404 === $statusCode;
     }*/
 
     /**
@@ -235,7 +293,6 @@ class Request {
      * @return bool
      */
     /*private function isEmptyResponse($statusCode) {
-        return in_array($statusCode, array(204, 304));
-    }*/
-
+return in_array($statusCode, array(204, 304));
+}*/
 }

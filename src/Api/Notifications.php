@@ -12,8 +12,8 @@ namespace Tomloprod\IonicApi\Api;
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
-class Notifications extends Request {
-
+class Notifications extends Request
+{
     public $requestData = [];
     private $ionicProfile;
     private static $endPoints = [
@@ -48,7 +48,8 @@ class Notifications extends Request {
      * @param string $scheduledDateTime - Time to start delivery of the notification Y-m-d H:i:s format
      * @param string $sound - Filename of audio file to play when a notification is received.
      */
-    public function setConfig($notificationData, $payloadData = [], $silentNotification = false, $scheduledDateTime = '', $sound = 'default') {
+    public function setConfig($notificationData, $payloadData = [], $silentNotification = false, $scheduledDateTime = '', $sound = 'default')
+    {
         if (!is_array($notificationData)) {
             $notificationData = [$notificationData];
         }
@@ -74,14 +75,14 @@ class Notifications extends Request {
         }
 
         // scheduled
-        if($this->isDatetime($scheduledDateTime)) {
+        if ($this->isDatetime($scheduledDateTime)) {
             // Convert dateTime to RFC3339
             $this->requestData['scheduled'] = date("c", strtotime($scheduledDateTime));
         }
 
         // sound
         $this->requestData['notification']['android']['sound'] = $sound;
-    	$this->requestData['notification']['ios']['sound'] = $sound;
+        $this->requestData['notification']['ios']['sound'] = $sound;
     }
 
     /**
@@ -91,14 +92,15 @@ class Notifications extends Request {
      * @param array $parameters
      * @return object $response
      */
-    public function paginatedList($parameters = []) {
+    public function paginatedList($parameters = [])
+    {
         $response =  $this->sendRequest(
             self::METHOD_GET,
             self::$endPoints['list'] . '?' . http_build_query($parameters),
             $this->requestData
         );
         $this->resetRequestData();
-	    return $response;
+        return $response;
     }
 
     /**
@@ -108,7 +110,8 @@ class Notifications extends Request {
      * @param string $notificationId - Notification id
      * @return object $response
      */
-    public function retrieve($notificationId) {
+    public function retrieve($notificationId)
+    {
         $response = $this->sendRequest(
             self::METHOD_GET,
             str_replace(':notification_id', $notificationId, self::$endPoints['retrieve']),
@@ -125,7 +128,8 @@ class Notifications extends Request {
      * @param string $notificationId - Notification id
      * @return object
      */
-    public function replace($notificationId) {
+    public function replace($notificationId)
+    {
         $response = $this->sendRequest(
             self::METHOD_PUT,
             str_replace(':notification_id', $notificationId, self::$endPoints['replace']),
@@ -142,7 +146,8 @@ class Notifications extends Request {
      * @param $notificationId
      * @return object $response
      */
-    public function delete($notificationId) {
+    public function delete($notificationId)
+    {
         return $this->sendRequest(
             self::METHOD_DELETE,
             str_replace(':notification_id', $notificationId, self::$endPoints['delete'])
@@ -154,15 +159,16 @@ class Notifications extends Request {
      *
      * @return array - array of responses
      */
-    public function deleteAll() {
+    public function deleteAll()
+    {
         $responses = array();
         $notifications = self::paginatedList();
-        if($notifications['success']) {
-           foreach($notifications['response']['data'] as $notification) {
-               $responses[] = self::delete($notification->uuid);
-           }
+        if ($notifications['success']) {
+            foreach ($notifications['response']['data'] as $notification) {
+                $responses[] = self::delete($notification->uuid);
+            }
         } else {
-           return array($notifications);
+            return array($notifications);
         }
         return $responses;
     }
@@ -175,7 +181,8 @@ class Notifications extends Request {
      * @param array $parameters
      * @return object $response
      */
-    public function listMessages($notificationId, $parameters = []) {
+    public function listMessages($notificationId, $parameters = [])
+    {
         $endPoint = str_replace(':notification_id', $notificationId, self::$endPoints['listMessages']);
         $response =  $this->sendRequest(
             self::METHOD_GET,
@@ -183,7 +190,7 @@ class Notifications extends Request {
             $this->requestData
         );
         $this->resetRequestData();
-	    return $response;
+        return $response;
     }
 
     /**
@@ -194,7 +201,8 @@ class Notifications extends Request {
      * @param array $deviceTokens
      * @return object $response
      */
-    public function sendNotification($deviceTokens) {
+    public function sendNotification($deviceTokens)
+    {
         $this->requestData['tokens'] = $deviceTokens;
         $this->requestData['send_to_all'] = false;
         return $this->create();
@@ -207,7 +215,8 @@ class Notifications extends Request {
      * @link https://docs.ionic.io/api/endpoints/push.html#post-notifications Ionic documentation
      * @return object $response
      */
-    public function sendNotificationToAll() {
+    public function sendNotificationToAll()
+    {
         $this->requestData['send_to_all'] = true;
         return $this->create();
     }
@@ -220,7 +229,8 @@ class Notifications extends Request {
      * @private
      * @return object $response
      */
-    private function create() {
+    private function create()
+    {
         $response = $this->sendRequest(
             self::METHOD_POST,
             self::$endPoints['create'],
@@ -235,7 +245,8 @@ class Notifications extends Request {
      *
      * @private
      */
-    private function resetRequestData() {
+    private function resetRequestData()
+    {
         $this->requestData = ['profile' => $this->ionicProfile];
     }
 
@@ -245,11 +256,11 @@ class Notifications extends Request {
      * @param string $dateTime
      * @return boolean
      */
-    private function isDatetime($dateTime) {
+    private function isDatetime($dateTime)
+    {
         if (preg_match('/^(\d{4})-(\d\d?)-(\d\d?) (\d\d?):(\d\d?):(\d\d?)$/', $dateTime, $matches)) {
             return checkdate($matches[2], $matches[3], $matches[1]) && $matches[4] / 24 < 1 && $matches[5] / 60 < 1 && $matches[6] / 60 < 1;
         }
         return false;
     }
-
 }
