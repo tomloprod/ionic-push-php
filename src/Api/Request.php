@@ -95,14 +95,14 @@ class Request
 
         $response = curl_exec($curlHandler);
 
-        $info = curl_getinfo($curlHandler);
+        $statusCode = curl_getinfo($curlHandler, CURLINFO_HTTP_CODE);
 
         curl_close($curlHandler);
 
         $response = json_decode($response);
 
-        if ($info['http_code'] !== 200) {
-            $this->throwRequestException($info['http_code'], $response);
+        if ($statusCode !== 200) {
+            $this->throwRequestException($statusCode, $response);
         }
 
         // Return response.
