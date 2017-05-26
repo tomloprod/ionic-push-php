@@ -101,7 +101,7 @@ class Request
 
         $response = json_decode($response);
 
-        if ($statusCode !== 200) {
+        if (!$this->isSuccessResponse($statusCode)) {
             $this->throwRequestException($statusCode, $response);
         }
 
@@ -119,6 +119,18 @@ class Request
     /*private function isValidResponse($statusCode) {
     return !$this->isInvalidResponse($statusCode);
     }*/
+
+    /**
+     * Is response valid?
+     *
+     * @private
+     * @param number $statusCode
+     * @return bool
+     */
+    private function isSuccessResponse($statusCode)
+    {
+        return $statusCode >= 200 && $statusCode < 300;
+    }
 
     /**
      * Is response invalid?
