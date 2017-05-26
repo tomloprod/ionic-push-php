@@ -50,7 +50,8 @@ class DeviceTokens extends Request {
     public function create($parameters) {
         return $this->sendRequest(
             self::METHOD_POST,
-            self::$endPoints['create'] . '?' . http_build_query($parameters)
+            self::$endPoints['create'],
+            $parameters
         );
     }
 
