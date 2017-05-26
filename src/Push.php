@@ -15,7 +15,8 @@ use Tomloprod\IonicApi\Api\Messages;
  * @author  Tomás L.R (@tomloprod)
  * @author  Ramon Carreras (@ramoncarreras)
  */
-class Push {
+class Push
+{
 
     /**
      * Notifications class instance.
@@ -44,10 +45,10 @@ class Push {
      * @param $ionicProfile
      * @param $ionicAPIToken
      */
-    public function __construct($ionicProfile, $ionicAPIToken) {
+    public function __construct($ionicProfile, $ionicAPIToken)
+    {
         $this->notifications = new Notifications($ionicProfile, $ionicAPIToken);
         $this->deviceTokens = new DeviceTokens($ionicProfile, $ionicAPIToken);
         $this->messages = new Messages($ionicProfile, $ionicAPIToken);
     }
-
 }

@@ -12,8 +12,8 @@ namespace Tomloprod\IonicApi\Api;
  * @author Tomás L.R (@tomloprod)
  * @author Ramon Carreras (@ramoncarreras)
  */
-class DeviceTokens extends Request {
-
+class DeviceTokens extends Request
+{
     private static $endPoints = [
         'list' => '/push/tokens', // GET
         'create' => '/push/tokens', // POST
@@ -32,7 +32,8 @@ class DeviceTokens extends Request {
      * @param array $parameters
      * @return object $response
      */
-    public function paginatedList($parameters = []) {
+    public function paginatedList($parameters = [])
+    {
         return $this->sendRequest(
             self::METHOD_GET,
             self::$endPoints['list'] . '?' . http_build_query($parameters)
@@ -47,7 +48,8 @@ class DeviceTokens extends Request {
      * @param array $parameters
      * @return object $response
      */
-    public function create($parameters) {
+    public function create($parameters)
+    {
         return $this->sendRequest(
             self::METHOD_POST,
             self::$endPoints['create'],
@@ -61,7 +63,8 @@ class DeviceTokens extends Request {
      * @param string $deviceToken - Device token
      * @return object $response
      */
-    public function retrieve($deviceToken) {
+    public function retrieve($deviceToken)
+    {
         return $this->prepareRequest(
             self::METHOD_GET,
             $deviceToken,
@@ -77,7 +80,8 @@ class DeviceTokens extends Request {
      * @param array $parameters
      * @return object $response
      */
-    public function update($deviceToken, $parameters) {
+    public function update($deviceToken, $parameters)
+    {
         return $this->prepareRequest(
             self::METHOD_PATCH,
             $deviceToken,
@@ -92,7 +96,8 @@ class DeviceTokens extends Request {
      * @param string $deviceToken - Device token
      * @return object $response
      */
-    public function delete($deviceToken) {
+    public function delete($deviceToken)
+    {
         return $this->prepareRequest(
             self::METHOD_DELETE,
             $deviceToken,
@@ -105,10 +110,11 @@ class DeviceTokens extends Request {
      *
      * @link https://docs.ionic.io/api/endpoints/push.html#get-tokens-token_id-users Ionic documentation
      * @param string $deviceToken - Device token
-	 * @param array $parameters - Query parameters (pagination).
+     * @param array $parameters - Query parameters (pagination).
      * @return object $response
      */
-    public function listAssociatedUsers($deviceToken, $parameters = []) {
+    public function listAssociatedUsers($deviceToken, $parameters = [])
+    {
         return $this->prepareRequest(
             self::METHOD_GET,
             $deviceToken,
@@ -124,7 +130,8 @@ class DeviceTokens extends Request {
      * @param string $userId - User id
      * @return object $response
      */
-    public function associateUser($deviceToken, $userId) {
+    public function associateUser($deviceToken, $userId)
+    {
         // Replace :user_id by $userId
         $endPoint = str_replace(':user_id', $userId, self::$endPoints['associateUser']);
         return $this->prepareRequest(
@@ -142,7 +149,8 @@ class DeviceTokens extends Request {
      * @param string $userId - User id
      * @return object $response
      */
-    public function dissociateUser($deviceToken, $userId) {
+    public function dissociateUser($deviceToken, $userId)
+    {
         // Replace :user_id by $userId
         $endPoint = str_replace(':user_id', $userId, self::$endPoints['dissociateUser']);
         return $this->prepareRequest(
@@ -161,12 +169,12 @@ class DeviceTokens extends Request {
      * @param string $endPoint
      * @return object $response
      */
-    private function prepareRequest($method, $deviceToken, $endPoint) {
+    private function prepareRequest($method, $deviceToken, $endPoint)
+    {
         $tokenId = md5($deviceToken);
         return $this->sendRequest(
             $method,
             str_replace(':token_id', $tokenId, $endPoint)
         );
     }
-
 }

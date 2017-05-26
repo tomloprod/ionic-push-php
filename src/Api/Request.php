@@ -283,5 +283,4 @@ class Request
     /*private function isEmptyResponse($statusCode) {
 return in_array($statusCode, array(204, 304));
 }*/
-
 }
