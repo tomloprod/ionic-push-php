@@ -212,7 +212,7 @@ class Request
 
         if (isset($error->details) && is_array($error->details)) {
             foreach ($error->details as $detail) {
-                $message .= ' ['.$detail->error_type.'] '.implode(' ', $detail->errors);
+                $message .= implode(' - ', $detail->errors).' ['.$detail->error_type.' in '.$detail->parameter.'] ';
             }
         }
 
