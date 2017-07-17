@@ -21,6 +21,7 @@ class RequestException extends \Exception
      * @var array
      */
     public static $statusTexts = array(
+        0   => 'No Response',
         100 => 'Continue',
         101 => 'Switching Protocols',
         102 => 'Processing',            // RFC2518
@@ -109,9 +110,9 @@ class RequestException extends \Exception
      */
     public function __construct($type, $message, $link = "", $code = 0, $e = null)
     {
-        //$message = $type. " : " . $message;
         $this->type = $type;
         $this->link = $link;
+        
         parent::__construct($message, $code, $e);
     }
 
@@ -142,12 +143,7 @@ class RequestException extends \Exception
      */
     public function prettify()
     {
-        $str = "ERROR " . $this->getCode() . " (" . self::$statusTexts[$this->getCode()] . "): ";
-        $str .= $this->getMessage();
-        /*if(!empty($this->link)) {
-            $str .= " More info here: " .  $this->getLink();
-        }*/
-        return $str;
+        return 'ERROR '.$this->getCode().' ('.self::$statusTexts[$this->getCode()].'): '.$this->getMessage();
     }
 
     /**
